@@ -572,8 +572,7 @@ REQUIREMENTS:
 
 OUTPUT: Just the prompt, nothing else.`
           }
-        ],
-        max_tokens: 150
+        ]
       },
       {
         headers: {
