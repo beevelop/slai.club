@@ -165,6 +165,10 @@ function cleanAIResponse(content) {
     /^\*\*presentation/i,
     /^\*\*title/i,
     /^\*\*subtitle/i,
+    /^\*\*slide/i,
+    /^\d+\.\s+subtitle:/i,
+    /^\d+\.\s+slide/i,
+    /^subtitle:/i,
   ];
   
   while (lines.length > 0) {
@@ -185,6 +189,9 @@ function cleanAIResponse(content) {
     /^feel free to/i,
     /^you can/i,
     /^this (presentation|should)/i,
+    /^have fun/i,
+    /^try to/i,
+    /^don't forget/i,
   ];
   
   while (lines.length > 0) {
@@ -196,7 +203,98 @@ function cleanAIResponse(content) {
     }
   }
   
-  return lines.join('\n');
+  // Sanitize and fix common markdown/HTML issues
+  const sanitized = sanitizeContent(lines.join('\n'));
+  
+  return sanitized;
+}
+
+/**
+ * Sanitize content to fix common markdown and HTML issues
+ */
+function sanitizeContent(content) {
+  let lines = content.split('\n');
+  let result = [];
+  let inVClicks = false;
+  let skipUntilNextSection = false;
+  
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i];
+    const trimmed = line.trim();
+    
+    // Reset skip flag when we hit a new slide
+    if (trimmed === '---' || trimmed.match(/^# /)) {
+      skipUntilNextSection = false;
+    }
+    
+    // Track <v-clicks> tags
+    if (trimmed === '<v-clicks>') {
+      inVClicks = true;
+      result.push(line);
+      continue;
+    }
+    
+    if (trimmed === '</v-clicks>') {
+      inVClicks = false;
+      result.push(line);
+      continue;
+    }
+    
+    // Skip lines that are just formatting characters
+    if (trimmed === '**' || trimmed === '*' || trimmed === '__' || trimmed === '_') {
+      continue;
+    }
+    
+    // Skip lines with problematic patterns
+    if (trimmed.match(/^\*\*\d+\.\s+(slide|subtitle|section)/i)) {
+      skipUntilNextSection = true;
+      continue;
+    }
+    
+    if (trimmed.match(/^\d+\.\s+\*\*?(slide|subtitle|section)/i)) {
+      skipUntilNextSection = true;
+      continue;
+    }
+    
+    if (skipUntilNextSection) {
+      continue;
+    }
+    
+    // Skip additional AI commentary patterns
+    if (trimmed.match(/^(presentation title|slide \d+:|slide contents?:)/i)) {
+      continue;
+    }
+    
+    // Fix unclosed bold/italic at the end of lines
+    line = line.replace(/\*\*\s*$/, '').replace(/\*\s*$/, '');
+    
+    // Fix lines that start with unclosed bold
+    if (trimmed.startsWith('**') && !trimmed.substring(2).includes('**')) {
+      line = line.replace(/^\s*\*\*\s*/, '');
+    }
+    
+    // Remove markdown bold formatting from headings (they're already bold)
+    if (trimmed.startsWith('# ')) {
+      line = line.replace(/\*\*/g, '');
+    }
+    
+    // Clean up malformed quotes
+    line = line.replace(/^["']\s*$/, '');
+    
+    result.push(line);
+  }
+  
+  // Ensure all <v-clicks> are closed
+  if (inVClicks) {
+    result.push('</v-clicks>');
+  }
+  
+  // Remove any trailing empty lines
+  while (result.length > 0 && result[result.length - 1].trim() === '') {
+    result.pop();
+  }
+  
+  return result.join('\n');
 }
 
 /**
@@ -204,18 +302,41 @@ function cleanAIResponse(content) {
  */
 function extractSubtitle(content) {
   const lines = content.split('\n');
+  
+  // Look for explicit subtitle line
   for (const line of lines) {
     if (line.toLowerCase().includes('subtitle') && line.includes(':')) {
-      return line.split(':').slice(1).join(':').trim().replace(/^["']|["']$/g, '');
+      let subtitle = line.split(':').slice(1).join(':').trim();
+      // Clean up formatting
+      subtitle = subtitle.replace(/^["'*\s]+|["'*\s]+$/g, '').trim();
+      if (subtitle.length > 5) {
+        return subtitle;
+      }
     }
   }
-  // Try to find first non-empty line that's not a heading or separator
+  
+  // Try to find first non-empty line that's not a heading, separator, or layout directive
   for (const line of lines) {
     const trimmed = line.trim();
-    if (trimmed && !trimmed.startsWith('#') && !trimmed.startsWith('---') && trimmed.length > 5) {
-      return trimmed.replace(/^["*]+|["*]+$/g, '').trim();
+    // Skip various non-subtitle lines
+    if (trimmed && 
+        !trimmed.startsWith('#') && 
+        !trimmed.startsWith('---') && 
+        !trimmed.startsWith('layout:') &&
+        !trimmed.startsWith('<') &&
+        !trimmed.match(/^\d+\./) &&
+        !trimmed.match(/^\*\*\d+/) &&
+        trimmed !== '**' &&
+        trimmed !== '*' &&
+        trimmed.length > 5) {
+      // Clean up any formatting characters
+      let subtitle = trimmed.replace(/^["'*\s]+|["'*\s]+$/g, '').trim();
+      if (subtitle.length > 5) {
+        return subtitle;
+      }
     }
   }
+  
   return '🎯 An AI-Generated Adventure';
 }
 
