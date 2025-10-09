@@ -28,9 +28,12 @@ const GALLERY_TEMPLATE_PATH = path.join(__dirname, '..', 'template', 'gallery.ht
 
 // Configure fal.ai client
 if (FAL_AI_KEY) {
+  console.log('✅ FAL_AI_KEY is configured');
   fal.config({
     credentials: FAL_AI_KEY
   });
+} else {
+  console.log('⚠️  FAL_AI_KEY not found - image generation will be skipped');
 }
 
 // Ensure output directory exists
@@ -164,6 +167,9 @@ async function generateImage(prompt, slideNumber) {
     return null;
   } catch (error) {
     console.error(`❌ Error generating image for slide ${slideNumber}:`, error.message);
+    if (error.stack) {
+      console.error('Stack trace:', error.stack);
+    }
     return null;
   }
 }
@@ -201,13 +207,17 @@ function extractSlidesForImages(content) {
     const line = lines[i].trim();
 
     // Check if this is a slide title (starts with # but not ##)
-    if (line.match(/^# [^#]/)) {
+    // Match both "# Slide X:" format and regular "# Title" format
+    if (line.match(/^# (?:Slide \d+:|[^#])/)) {
       if (currentSlide) {
         slides.push(currentSlide);
       }
 
       slideNumber++;
-      const title = line.replace(/^# /, '').trim();
+      // Extract the title, removing "Slide X:" prefix if present
+      let title = line.replace(/^# /, '').trim();
+      title = title.replace(/^Slide \d+:\s*/, '');
+
       currentSlide = {
         number: slideNumber,
         title: title,
@@ -237,6 +247,7 @@ async function generateSlideImages(content, presentationDir) {
   console.log('\n🎨 Generating images for slides...');
 
   const slides = extractSlidesForImages(content.slides);
+  console.log(`📊 Found ${slides.length} slides to generate images for`);
   const imageMap = {};
 
   // Create images directory
@@ -270,24 +281,30 @@ Style: modern, colorful, fun illustration.`;
 }
 
 /**
- * Inject images into slide content
+ * Inject images into slide content and add Slidev separators
  */
 function injectImagesIntoSlides(slidesContent, imageMap) {
-  if (Object.keys(imageMap).length === 0) {
-    return slidesContent;
-  }
-
   const lines = slidesContent.split('\n');
   const result = [];
   let slideNumber = 0;
+  let isFirstSlide = true;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    result.push(line);
 
     // Check if this is a slide title (starts with # but not ##)
-    if (line.trim().match(/^# [^#]/)) {
+    if (line.trim().match(/^# (?:Slide \d+:|[^#])/)) {
       slideNumber++;
+
+      // Add Slidev separator before each slide (except the first one)
+      if (!isFirstSlide) {
+        result.push('');
+        result.push('---');
+        result.push('');
+      }
+      isFirstSlide = false;
+
+      result.push(line);
 
       // Add image after the title if we have one for this slide
       if (imageMap[slideNumber]) {
@@ -295,6 +312,8 @@ function injectImagesIntoSlides(slidesContent, imageMap) {
         result.push(`![](/${imageMap[slideNumber]})`);
         result.push('');
       }
+    } else {
+      result.push(line);
     }
   }
 
