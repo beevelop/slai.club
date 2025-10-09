@@ -32,13 +32,54 @@
             font-size: 1.2rem;
             opacity: 0.9;
         }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        .card .date {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .card .view-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            transition: opacity 0.3s ease;
+        }
+        .card .view-btn:hover {
+            opacity: 0.9;
+        }
         .empty-state {
             background: white;
             border-radius: 12px;
             padding: 3rem;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-top: 2rem;
         }
         .empty-state h2 {
             color: #667eea;
@@ -79,12 +120,16 @@
             <p class="tagline">AI-Generated Presentations for PowerPoint Karaoke</p>
         </header>
         
-        <div class="empty-state">
-            <h2>No Presentations Yet</h2>
-            <p>Presentations will appear here once the AI generation workflow runs.</p>
-            <p>The first presentation will be generated automatically on schedule!</p>
-            <a href="https://github.com/beevelop/slai.club/actions" class="cta" target="_blank">
-                View GitHub Actions →
+        <div class="gallery">
+            <a href="./presentations/2025-10-09-the-philosophy-of-pizza-toppings/index.html" class="card">
+                <h3>The Philosophy of Pizza Toppings</h3>
+                <p class="date">October 9, 2025</p>
+                <span class="view-btn">View Presentation →</span>
+            </a>
+            <a href="./presentations/2025-10-09-the-philosophy-of-pizza-toppings/index.html" class="card">
+                <h3>The Philosophy of Pizza Toppings</h3>
+                <p class="date">October 9, 2025</p>
+                <span class="view-btn">View Presentation →</span>
             </a>
         </div>
         
