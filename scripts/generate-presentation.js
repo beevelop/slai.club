@@ -913,12 +913,21 @@ async function createPresentation(content) {
 function updateGalleryIndex(presentationName, title) {
   const indexPath = path.join(__dirname, '..', 'index.html');
   const presentations = getExistingPresentations();
-  
-  presentations.unshift({
-    name: presentationName,
-    title: title,
-    date: new Date().toISOString()
-  });
+
+  // Check if this presentation already exists in the list
+  const existingIndex = presentations.findIndex(p => p.name === presentationName);
+  if (existingIndex !== -1) {
+    // Update existing entry
+    presentations[existingIndex].date = new Date().toISOString();
+    presentations[existingIndex].title = title;
+  } else {
+    // Add new entry at the beginning
+    presentations.unshift({
+      name: presentationName,
+      title: title,
+      date: new Date().toISOString()
+    });
+  }
   
   // Read gallery template
   let template = fs.readFileSync(GALLERY_TEMPLATE_PATH, 'utf8');
