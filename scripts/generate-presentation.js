@@ -75,24 +75,41 @@ async function generateContent() {
         messages: [
           {
             role: 'system',
-            content: 'You are a creative presentation generator for PowerPoint Karaoke. Create humorous, engaging, and slightly absurd presentations.'
+            content: 'You are a creative presentation generator for PowerPoint Karaoke. Generate ONLY valid Slidev markdown content - no explanations, no commentary, just the slides. Create humorous, engaging, and slightly absurd presentations with proper formatting.'
           },
           {
             role: 'user',
             content: `Create a PowerPoint Karaoke presentation about "${topic}". 
-            
-            Provide:
-            1. A catchy subtitle
-            2. 5-7 slide contents in markdown format
-            
-            Format each slide as:
-            # Slide Title
-            
-            - Point 1
-            - Point 2
-            - Point 3
-            
-            Make it funny and engaging!`
+
+CRITICAL: Output ONLY the slide content. NO preamble, NO explanations, NO commentary like "Sure, here you go" or "Remember to...". Start directly with the subtitle, then slides.
+
+FORMAT REQUIREMENTS:
+
+1. **First line**: A catchy, short subtitle (just the text, with an emoji if you want)
+
+2. **Slides**: Then create 5-7 content slides following this EXACT format:
+---
+layout: center
+---
+
+# 🎯 Short Punchy Title
+
+<v-clicks>
+
+- First concise point (max 8 words)
+- Second concise point (max 8 words)
+- Third concise point (max 8 words)
+
+</v-clicks>
+
+RULES:
+- Each heading needs a relevant emoji
+- Keep headings under 6 words
+- Exactly 3 bullet points per slide
+- Bullet points under 8 words each
+- Make it funny, engaging, and absurd!
+
+OUTPUT FORMAT - Start with subtitle, then slides (NO other text):`
           }
         ],
         temperature: 0.9
@@ -106,15 +123,81 @@ async function generateContent() {
     );
     
     const aiContent = response.data.choices[0].message.content;
+    const cleanedContent = cleanAIResponse(aiContent);
+    
     return {
       title: topic,
-      subtitle: extractSubtitle(aiContent),
-      slides: aiContent
+      subtitle: extractSubtitle(cleanedContent),
+      slides: cleanedContent
     };
   } catch (error) {
     console.error('❌ Error calling OpenAI API:', error.response?.data || error.message);
     process.exit(1);
   }
+}
+
+/**
+ * Clean AI response by removing commentary and extra text
+ */
+function cleanAIResponse(content) {
+  let lines = content.split('\n');
+  
+  // Find the first slide separator (---)
+  let firstSeparatorIndex = lines.findIndex(line => line.trim() === '---');
+  
+  // If we find separators, look for content between them
+  if (firstSeparatorIndex !== -1) {
+    // Find the second separator (start of actual content)
+    let secondSeparatorIndex = lines.findIndex((line, idx) => idx > firstSeparatorIndex && line.trim() === '---');
+    
+    if (secondSeparatorIndex !== -1) {
+      // Keep everything from the second separator onward
+      lines = lines.slice(secondSeparatorIndex + 1);
+    }
+  }
+  
+  // Remove common AI commentary patterns from the beginning
+  const commentaryPatterns = [
+    /^sure,?\s+(here|you go)/i,
+    /^here('s| is)/i,
+    /^okay,?\s+here/i,
+    /^alright,?\s+here/i,
+    /^i('ve| have)\s+(created|generated)/i,
+    /^\*\*presentation/i,
+    /^\*\*title/i,
+    /^\*\*subtitle/i,
+  ];
+  
+  while (lines.length > 0) {
+    const firstLine = lines[0].trim();
+    if (firstLine === '' || commentaryPatterns.some(pattern => pattern.test(firstLine))) {
+      lines.shift();
+    } else if (firstLine.startsWith('---') || firstLine.startsWith('#') || firstLine.startsWith('layout:')) {
+      break;
+    } else {
+      lines.shift();
+    }
+  }
+  
+  // Remove trailing commentary
+  const trailingPatterns = [
+    /^remember to/i,
+    /^make sure to/i,
+    /^feel free to/i,
+    /^you can/i,
+    /^this (presentation|should)/i,
+  ];
+  
+  while (lines.length > 0) {
+    const lastLine = lines[lines.length - 1].trim();
+    if (lastLine === '' || trailingPatterns.some(pattern => pattern.test(lastLine))) {
+      lines.pop();
+    } else {
+      break;
+    }
+  }
+  
+  return lines.join('\n');
 }
 
 /**
@@ -124,10 +207,17 @@ function extractSubtitle(content) {
   const lines = content.split('\n');
   for (const line of lines) {
     if (line.toLowerCase().includes('subtitle') && line.includes(':')) {
-      return line.split(':')[1].trim();
+      return line.split(':').slice(1).join(':').trim().replace(/^["']|["']$/g, '');
     }
   }
-  return 'An AI-Generated Adventure';
+  // Try to find first non-empty line that's not a heading or separator
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed && !trimmed.startsWith('#') && !trimmed.startsWith('---') && trimmed.length > 5) {
+      return trimmed.replace(/^["*]+|["*]+$/g, '').trim();
+    }
+  }
+  return '🎯 An AI-Generated Adventure';
 }
 
 /**
@@ -202,28 +292,40 @@ function extractSlidesForImages(content) {
   const lines = content.split('\n');
   let currentSlide = null;
   let slideNumber = 0;
+  let inSlideContent = false;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
 
+    // Check if this is a slide separator
+    if (line === '---') {
+      if (currentSlide) {
+        slides.push(currentSlide);
+        currentSlide = null;
+      }
+      inSlideContent = false;
+      continue;
+    }
+
     // Check if this is a slide title (starts with # but not ##)
-    // Match both "# Slide X:" format and regular "# Title" format
-    if (line.match(/^# (?:Slide \d+:|[^#])/)) {
+    if (line.match(/^# /)) {
       if (currentSlide) {
         slides.push(currentSlide);
       }
 
       slideNumber++;
-      // Extract the title, removing "Slide X:" prefix if present
+      // Extract the title, removing emoji and extra formatting
       let title = line.replace(/^# /, '').trim();
-      title = title.replace(/^Slide \d+:\s*/, '');
+      // Remove leading emoji if present
+      title = title.replace(/^[\p{Emoji}\p{Emoji_Presentation}\p{Emoji_Modifier_Base}\p{Emoji_Modifier}\p{Emoji_Component}]+\s*/u, '');
 
       currentSlide = {
         number: slideNumber,
         title: title,
-        content: [line]
+        content: []
       };
-    } else if (currentSlide) {
+      inSlideContent = true;
+    } else if (currentSlide && line && !line.startsWith('layout:') && !line.startsWith('<')) {
       currentSlide.content.push(line);
     }
   }
@@ -281,40 +383,45 @@ async function generateSlideImages(content, presentationDir) {
 }
 
 /**
- * Inject images into slide content and add Slidev separators
+ * Inject images into slide content (slides already have --- separators)
  */
 function injectImagesIntoSlides(slidesContent, imageMap) {
+  if (Object.keys(imageMap).length === 0) {
+    // No images to inject, return content as-is
+    return slidesContent;
+  }
+
   const lines = slidesContent.split('\n');
   const result = [];
   let slideNumber = 0;
-  let isFirstSlide = true;
+  let justFoundTitle = false;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+    const trimmed = line.trim();
 
     // Check if this is a slide title (starts with # but not ##)
-    if (line.trim().match(/^# (?:Slide \d+:|[^#])/)) {
+    if (trimmed.match(/^# /)) {
       slideNumber++;
-
-      // Add Slidev separator before each slide (except the first one)
-      if (!isFirstSlide) {
-        result.push('');
-        result.push('---');
-        result.push('');
-      }
-      isFirstSlide = false;
-
       result.push(line);
-
-      // Add image after the title if we have one for this slide
-      if (imageMap[slideNumber]) {
-        result.push('');
-        result.push(`![](/${imageMap[slideNumber]})`);
-        result.push('');
-      }
-    } else {
-      result.push(line);
+      justFoundTitle = true;
+      continue;
     }
+
+    // If we just found a title and have an image for this slide, inject it
+    if (justFoundTitle && imageMap[slideNumber]) {
+      // Check if the next line is empty, if not add an empty line
+      if (trimmed !== '') {
+        result.push('');
+      }
+      result.push(`![](/${imageMap[slideNumber]})`);
+      result.push('');
+      justFoundTitle = false;
+    } else {
+      justFoundTitle = false;
+    }
+
+    result.push(line);
   }
 
   return result.join('\n');
