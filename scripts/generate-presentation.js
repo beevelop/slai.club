@@ -54,14 +54,26 @@ async function generateContent() {
   
   // Example topics for PowerPoint Karaoke
   const topics = [
-    'The Secret Life of Rubber Ducks',
-    'Why Cats Are Actually Aliens',
-    'Time Travel Through Breakfast Cereals',
-    'The Philosophy of Pizza Toppings',
-    'Underwater Basket Weaving as a Sport',
-    'The History of Mismatched Socks',
-    'Cloud Shapes and Their Hidden Meanings',
-    'The Art of Professional Procrastination'
+    'The Secret Life of Left Socks',
+    'How Bananas Secretly Control the Stock Market',
+    '101 Uses for Unused Gift Cards',
+    'The Rise and Fall of Disco Dinosaurs',
+    'Why Aliens Prefer Pineapple Pizza',
+    'Chronicles of the Office Coffee Mug',
+    'How to Train Your Pet Rock',
+    'Time Management Tips from Sloths',
+    'The Unsung Heroes: Traffic Cones',
+    'Flat Earth: The Real Pancake Theory',
+    'Treehouse WiFi Networks - Fact or Fiction?',
+    'Parallel Universes in Your Refrigerator',
+    'Why Do We Yawn at Zebras?',
+    'Secrets of the Moon’s Cheese Supply',
+    'High Fashion for Goldfish',
+    'WiFi Passwords of the Illuminati',
+    'Interpreting the Art of Cheese Sculpting',
+    'Unexplained Phenomena: Haunted Tupperware',
+    'A Beginner’s Guide to Competitive Sleepwalking',
+    'How Unicorns Lost Their Jobs to Narwhals'
   ];
   
   const topic = CUSTOM_TOPIC || topics[Math.floor(Math.random() * topics.length)];
@@ -85,32 +97,93 @@ CRITICAL: Output ONLY the slide content. NO preamble, NO explanations, NO commen
 
 FORMAT REQUIREMENTS:
 
-Create 5-7 content slides following this EXACT format for EACH slide:
+Create 5-7 content slides. Mix up the layouts for variety:
+
+LAYOUT OPTIONS (vary these across slides):
+- layout: center (default centered content)
+- layout: image-right (content on left, space for image on right)
+- layout: image-left (content on right, space for image on left)
+- layout: two-cols (two columns)
+- layout: quote (for funny quotes)
+- layout: fact (for bold statements)
+
+EXAMPLE SLIDE FORMAT (DO NOT use "Short Punchy Title" - create ACTUAL creative titles!):
 
 ---
 layout: center
 ---
 
-# 🎯 Short Punchy Title
+# 🐱 Alien Cat Origins
 
 <v-clicks>
 
-- First concise point (max 8 words)
-- Second concise point (max 8 words)
-- Third concise point (max 8 words)
+- Arrived in ancient Egypt mysteriously
+- No natural predators fear them
+- Perfect night vision from space
 
 </v-clicks>
 
+EXAMPLE 2 - Quote Layout:
+
+---
+layout: quote
+---
+
+# "Meow means surrender human"
+## - Ancient Cat Proverb
+
+EXAMPLE 3 - Fact Layout:
+
+---
+layout: fact
+---
+
+# 9 Lives
+## Actually 9 Parallel Dimensions
+
+EXAMPLE 4 - Two Columns:
+
+---
+layout: two-cols
+---
+
+# 🔬 Scientific Evidence
+
+::left::
+
+- Defies gravity regularly
+- Teleports between rooms
+
+::right::
+
+- Sees infrared spectrum  
+- Communicates via quantum entanglement
+
 STRICT RULES:
 - Start IMMEDIATELY with "---" (slide separator)
-- Each heading needs a relevant emoji
-- Keep headings under 6 words
-- Exactly 3 bullet points per slide
+- Each heading MUST be a UNIQUE, CREATIVE title (NOT "Short Punchy Title"!)
+- Generate SPECIFIC titles based on what the slide is actually about
+- Titles should be witty, punchy, and directly related to the content
+- Each heading needs a relevant emoji that matches the content
+- Keep headings under 6 words but make them SPECIFIC and MEANINGFUL
+- Use 2-4 bullet points per slide (can vary)
 - Bullet points under 8 words each
 - Make it funny, engaging, and absurd!
+- Vary the layouts across slides (mix center, quote, fact, two-cols)
+- For quote layout: use # for the quote, ## for attribution
+- For fact layout: use # for the big fact/number, followed by explanatory text
+- For two-cols layout: use ::left:: and ::right:: to separate columns
+- You can use ### for subheadings on some slides
 - NO image tags (![]), NO "Point 1:", NO "Slide 1:", NO numbering
 - NO commentary or explanations between slides
-- Just the slides in the exact format shown above
+- NEVER use generic placeholder text like "Short Punchy Title"
+- Every title must be different and content-specific
+
+TITLE EXAMPLES (these are good - create similar unique titles):
+- "🐱 Whisker-Based Communication"
+- "🛸 The Great Litter Box Conspiracy" 
+- "📡 Purr Frequency Analysis"
+- "🌌 Catnip: Gateway Drug to Enlightenment"
 
 OUTPUT FORMAT - Start with the first "---" separator immediately:`
           }
@@ -596,8 +669,9 @@ function injectImagesIntoSlides(slidesContent, imageMap) {
       } else {
         // End of frontmatter - inject background if this slide gets an image
         // We inject for slideNumber+1 because we haven't seen the title yet
+        // Use relative path (without leading /) for GitHub Pages compatibility
         if (imageMap[slideNumber + 1]) {
-          frontmatterLines.push(`background: /${imageMap[slideNumber + 1]}`);
+          frontmatterLines.push(`background: ${imageMap[slideNumber + 1]}`);
         }
         frontmatterLines.push(line);
         result.push(...frontmatterLines);
