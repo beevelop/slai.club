@@ -87,103 +87,155 @@ async function generateContent() {
         messages: [
           {
             role: 'system',
-            content: 'You are a creative presentation generator for PowerPoint Karaoke. Generate ONLY valid Slidev markdown content - no explanations, no commentary, just the slides. Create humorous, engaging, and slightly absurd presentations with proper formatting.'
+            content: 'You are a master storyteller and comedy writer creating PowerPoint Karaoke presentations. Your presentations follow a compelling narrative arc with dramatic moments and unexpected plot twists. Generate ONLY valid Slidev markdown content - no explanations, no commentary, just the slides. Create presentations that start plausible but become increasingly absurd, culminating in a surprise twist that catches the presenter off-guard.'
           },
           {
             role: 'user',
-            content: `Create a PowerPoint Karaoke presentation about "${topic}". 
+            content: `Create a PowerPoint Karaoke presentation about "${topic}".
+
+🎭 STORYTELLING MISSION:
+This is PowerPoint Karaoke - the presenter has NEVER seen these slides before! Your goal is to craft a compelling narrative that starts reasonable, builds tension, and then completely derails with an absurd twist around slide 4-5 that will make the presenter go "WAIT, WHAT?!"
 
 CRITICAL: Output ONLY the slide content. NO preamble, NO explanations, NO commentary like "Sure, here you go" or "Remember to...". Start directly with the first slide separator (---).
 
+📖 NARRATIVE STRUCTURE (Create exactly 6-8 slides):
+
+ACT 1 - THE SETUP (Slides 1-2):
+- Start seemingly legitimate and informative
+- Establish credibility with "facts"
+- Hook the presenter with interesting information
+- Make them think "okay, this is going somewhere..."
+
+ACT 2 - RISING TENSION (Slides 3-4):
+- Introduce increasingly questionable claims
+- Add dramatic statistics or bold statements
+- Build suspense with mysterious implications
+- Start hinting something isn't quite right
+
+ACT 3 - THE TWIST (Slide 4-5 - THE SURPRISE MOMENT):
+- COMPLETELY change direction with absurd revelation
+- Introduce ridiculous conspiracy theory OR
+- Reveal secret villain/hero OR
+- Time travel/aliens/supernatural element OR
+- Connect to completely unrelated topic
+- This should make the presenter pause and go "...WHAT?!"
+
+ACT 4 - ESCALATION (Slides 5-6):
+- Double down on the absurdity
+- Add more ridiculous "evidence"
+- Dramatic declarations
+- Over-the-top conclusions
+
+ACT 5 - CLIMAX (Slide 7):
+- Epic finale with call-to-action
+- Dramatic quote or statement
+- Leave on a memorable note
+- Maximum absurdity achieved
+
 FORMAT REQUIREMENTS:
 
-Create 5-7 content slides. Mix up the layouts for variety:
+LAYOUT OPTIONS (vary these strategically):
+- layout: center (for dramatic reveals)
+- layout: image-right (for "professional" content)
+- layout: image-left (for building credibility)
+- layout: two-cols (for comparisons/contrasts)
+- layout: quote (for shocking quotes during the twist)
+- layout: fact (for dramatic statistics and BIG reveals)
 
-LAYOUT OPTIONS (vary these across slides):
-- layout: center (default centered content)
-- layout: image-right (content on left, space for image on right)
-- layout: image-left (content on right, space for image on left)
-- layout: two-cols (two columns)
-- layout: quote (for funny quotes)
-- layout: fact (for bold statements)
-
-EXAMPLE SLIDE FORMAT (DO NOT use "Short Punchy Title" - create ACTUAL creative titles!):
+EXAMPLE SLIDE FORMAT:
 
 ---
 layout: center
 ---
 
-# 🐱 Alien Cat Origins
+# 🐱 Ancient Feline Artifacts
 
 <v-clicks>
 
-- Arrived in ancient Egypt mysteriously
-- No natural predators fear them
-- Perfect night vision from space
+- First domesticated in Egypt 3000 BC
+- Worshipped as sacred guardians
+- 73 million cats in US homes today
 
 </v-clicks>
 
-EXAMPLE 2 - Quote Layout:
-
----
-layout: quote
----
-
-# "Meow means surrender human"
-## - Ancient Cat Proverb
-
-EXAMPLE 3 - Fact Layout:
+EXAMPLE 2 - THE TWIST MOMENT:
 
 ---
 layout: fact
 ---
 
-# 9 Lives
-## Actually 9 Parallel Dimensions
+# 🛸 PLOT TWIST
+## Cats Are Actually Alien Scouts
+### They've Been Reporting Back Since Day One
 
-EXAMPLE 4 - Two Columns:
+EXAMPLE 3 - Dramatic Quote:
+
+---
+layout: quote
+---
+
+# "Every purr is a status update to the mothership"
+## - Declassified CIA Document, 2043
+
+EXAMPLE 4 - Escalation:
 
 ---
 layout: two-cols
 ---
 
-# 🔬 Scientific Evidence
+# 📡 The Evidence Mounts
 
 ::left::
 
-- Defies gravity regularly
-- Teleports between rooms
+**Normal Cat Behavior?**
+- Stares at nothing
+- 3 AM zoomies
+- Knocking things off tables
 
 ::right::
 
-- Sees infrared spectrum  
-- Communicates via quantum entanglement
+**OR Secret Mission?**
+- Scanning for threats
+- Testing Earth's gravity
+- Collecting DNA samples
 
-STRICT RULES:
+STORYTELLING RULES:
+- Start with 2 slides that seem TOTALLY NORMAL and educational
+- Slide 3-4: Plant seeds of doubt with "interesting facts"
+- Slide 4-5: THE BIG TWIST - go completely absurd
+- Slide 5-7: Escalate the absurdity, add "proof"
+- Final slide: Epic conclusion with dramatic statement
+- Use quote layouts for shocking revelations
+- Use fact layouts for dramatic statistics/reveals
+- Build tension through pacing
+
+DRAMATIC TECHNIQUES:
+- Foreshadowing in early slides (subtle hints)
+- Use of "But wait...", "However...", "The Truth Is..."
+- Dramatic emojis (🚨, ⚠️, 🛸, 👁️, 💥, 🔥)
+- ALL CAPS for shocking moments
+- Numbers that get progressively more absurd
+- "Experts say...", "Studies show...", "Evidence suggests..."
+
+STRICT FORMATTING RULES:
 - Start IMMEDIATELY with "---" (slide separator)
-- Each heading MUST be a UNIQUE, CREATIVE title (NOT "Short Punchy Title"!)
-- Generate SPECIFIC titles based on what the slide is actually about
-- Titles should be witty, punchy, and directly related to the content
-- Each heading needs a relevant emoji that matches the content
-- Keep headings under 6 words but make them SPECIFIC and MEANINGFUL
-- Use 2-4 bullet points per slide (can vary)
-- Bullet points under 8 words each
-- Make it funny, engaging, and absurd!
-- Vary the layouts across slides (mix center, quote, fact, two-cols)
-- For quote layout: use # for the quote, ## for attribution
-- For fact layout: use # for the big fact/number, followed by explanatory text
-- For two-cols layout: use ::left:: and ::right:: to separate columns
-- You can use ### for subheadings on some slides
-- NO image tags (![]), NO "Point 1:", NO "Slide 1:", NO numbering
-- NO commentary or explanations between slides
-- NEVER use generic placeholder text like "Short Punchy Title"
-- Every title must be different and content-specific
+- Each heading MUST be a UNIQUE, CREATIVE title
+- Titles should be witty, punchy, and drive the narrative
+- Each heading needs a relevant emoji
+- Keep headings under 6 words but make them MEANINGFUL
+- Use 2-4 bullet points per slide
+- Bullet points under 10 words each
+- NO image tags (![]), NO "Point 1:", NO "Slide 1:"
+- NO commentary between slides
 
-TITLE EXAMPLES (these are good - create similar unique titles):
-- "🐱 Whisker-Based Communication"
-- "🛸 The Great Litter Box Conspiracy" 
-- "📡 Purr Frequency Analysis"
-- "🌌 Catnip: Gateway Drug to Enlightenment"
+TITLE PROGRESSION EXAMPLE (showing narrative arc):
+1. "🐱 Introduction to House Cats"
+2. "📊 By The Numbers"
+3. "🤔 Strange Behavioral Patterns"
+4. "🛸 THE SHOCKING TRUTH" ← THE TWIST
+5. "🚨 Evidence You Can't Ignore"
+6. "👽 What They Don't Want You To Know"
+7. "⚠️ The Time To Act Is NOW"
 
 OUTPUT FORMAT - Start with the first "---" separator immediately:`
           }
@@ -389,23 +441,26 @@ function sanitizeContent(content) {
 }
 
 /**
- * Generate a catchy subtitle from the title
+ * Generate a dramatic subtitle from the title
  */
 function extractSubtitle(content, title) {
-  // Generate a simple, catchy subtitle based on the title
-  // This adds a bit of fun to the cover slide
+  // Generate dramatic subtitles that hint at the twist to come
   const subtitles = [
-    '🎯 An AI-Generated Adventure',
-    '🚀 A Journey into the Unknown', 
-    '🎪 Prepare for the Unexpected',
-    '⚡ Buckle Up for This Ride',
-    '🎨 A Creative Exploration',
-    '🌟 Let\'s Dive In!',
-    '🎭 The Show Must Go On',
-    '🔮 Mysteries Await'
+    '🎯 An Investigation You Won\'t Forget',
+    '🚨 The Truth They Don\'t Want You To Know',
+    '🎪 Nothing Is As It Seems',
+    '⚡ Brace Yourself For The Revelation',
+    '🔥 Everything You Believed Was Wrong',
+    '🌟 A Story That Defies Logic',
+    '🎭 Plot Twist Guaranteed',
+    '🔮 The Conspiracy Unfolds',
+    '👁️ Once You See It, You Can\'t Unsee It',
+    '💥 Reality Will Never Be The Same',
+    '🛸 Prepare For The Unexpected',
+    '⚠️ Things Are About To Get Weird'
   ];
-  
-  // Pick a random subtitle or use a default
+
+  // Pick a random dramatic subtitle
   return subtitles[Math.floor(Math.random() * subtitles.length)];
 }
 
@@ -491,7 +546,7 @@ async function generateImagePrompt(slideTitle, slideContent) {
         messages: [
           {
             role: 'system',
-            content: 'You are an expert at creating image generation prompts for AI art models. You create concise, effective prompts that follow the format: Subject + Action + Style + Context, all in a single sentence.'
+            content: 'You are an expert at creating image generation prompts for AI art models. You create concise, effective prompts that match the narrative tone of PowerPoint Karaoke presentations - from credible to absurd. Follow the format: Subject + Action + Style + Mood, all in a single sentence.'
           },
           {
             role: 'user',
@@ -501,13 +556,19 @@ Title: "${slideTitle}"
 Content: ${slideContent.join(' ')}
 
 REQUIREMENTS:
-- Single sentence format: Subject + Action + Style + Context
+- Single sentence format: Subject + Action + Style + Mood
 - Subject: The main subject/concept based on the slide title
-- Action: What the subject is doing (make it humorous and exaggerated)
-- Style: Visual style (vibrant modern digital art, bold colors, playful)
-- Context: Purpose (PowerPoint Karaoke presentation slide)
+- Action: What the subject is doing (match the absurdity level of the slide)
+- Style: Visual style that matches the content:
+  * Early slides: Professional, clean, documentary-style
+  * Middle slides: Slightly dramatic, mysterious, intriguing
+  * Twist slides: Dramatic, conspiracy-theory aesthetic, shocking
+  * Late slides: Maximum absurdity, over-the-top, surreal
+- Mood: Match the dramatic intensity of the slide content
 - Keep it under 60 words
-- Make it fun, engaging, and slightly absurd
+- If title contains words like "TRUTH", "SHOCKING", "EVIDENCE", "CONSPIRACY": Make it dramatic and intense
+- If title is straightforward: Keep it professional but engaging
+- If title is absurd: Go full surreal and exaggerated
 
 OUTPUT: Just the prompt, nothing else.`
           }
