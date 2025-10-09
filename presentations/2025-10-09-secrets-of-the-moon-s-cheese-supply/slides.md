@@ -17,7 +17,7 @@ mdc: true
 
 # Secrets of the Moon’s Cheese Supply
 
-🎨 A Creative Exploration
+🚨 The Truth They Don't Want You To Know
 
 <div class="pt-12">
   <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
@@ -33,62 +33,106 @@ mdc: true
 </div>
 
 ---
+layout: image
+image: /slide-1.png
+---
 
-# 🌕 Lunar Cheese Cooperative
-- Hidden caves beneath Mare Tranquillitatis
-- Gravity-aged rind glows under starlight
-- Astronauts trade jars with squeaky diplomacy
+# 🌕 Lunar Larder, First Glance
 
 ---
 layout: image-right
-background: /images/slide-2.png
+image: /slide-2.png
 ---
 
-# 🧀 Crater Dairy Declares
-- Low-G aging speeds rind
-- Meteor dust flavors the cheese
-- Astronauts sign cheese receipts
+# 🧪 What Apollo Didn’t Find
+
+<v-clicks>
+
+- Early myths mention cheese
+- Apollo samples: basalt, anorthosite
+- No dairy molecules detected (officially)
+- Supply question remains open
+
+</v-clicks>
 
 ---
 layout: image-left
-background: /images/slide-3.png
+image: /slide-3.png
 ---
 
-# 🐭 Moon Mice Guild
-- Secret cheese heists through skylights
-- Basalt tunnels house crumbly cheese
-- They stamp wheels with whisker marks
+# 📡 Logistics Clues Emerge
+
+<v-clicks>
+
+- Tidal cycles match harvest seasons
+- Lunar dust shows lactate traces
+- Cold traps preserve fats at -230°C
+- Craters named after dairies? coincidence?
+
+</v-clicks>
 
 ---
-layout: two-cols
-background: /images/slide-4.png
+layout: image-right
+image: /slide-4.png
 ---
 
-# 🚚 Cheese Route Logistics
-::left::
-- Traffic jams in terminator shadows
-- Crater checkpoints regulate wheels
-::right::
-- Rocket couriers hum phase-shift tunes
-- Wedge drones deliver crumb drops
+# 🚨 Supply Chain Anomalies
 
----
-layout: quote
-background: /images/slide-5.png
----
+<v-clicks>
 
-# "🌓 The Moon approves of cheese, not taxes"
-## - The Lunar Larder Lampoon
+- 11 nations import 'lunar cultures'
+- Seismometers ping at pizza rush hours
+- Mice footprints in regolith? Who?
+- NASA fridge budget: classified
+
+</v-clicks>
 
 ---
 layout: fact
-background: /images/slide-6.png
 ---
 
-# 🧀 42 Moon-Cheese Varieties
-## Hidden in night-dark cellars
-- Cataloged by the Star Dairy Guild
-- Each wheel hums a lullaby
+# 🛸 PLOT TWIST
+## The Moon Is A Cold-Chain Warehouse
+### Staffed By Time-Traveling Dairy Monks
+
+---
+layout: image-left
+image: /slide-6.png
+---
+
+# ⏳ Monastic Milk Protocols
+
+<v-clicks>
+
+- Monks arrive via crater portals
+- Chant to curdle moonlight
+- Tides schedule global deliveries
+- Return before we notice
+
+</v-clicks>
+
+---
+layout: image-right
+image: /slide-7.png
+---
+
+# 🔬 Artefacts They Forgot
+
+<v-clicks>
+
+- Gouda rind on flag fibers
+- Cowbell echo in seismographs
+- Receipt stamped 2047, Sea of Tranquility
+- Footage: monk on a rover
+
+</v-clicks>
+
+---
+layout: quote
+---
+
+# 🍕 "DO NOT STIR THE FONDUE OF TIME"
+## - Custodian of Crater IX
 
 ---
 layout: end
