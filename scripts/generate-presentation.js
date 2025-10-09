@@ -112,7 +112,6 @@ RULES:
 OUTPUT FORMAT - Start with subtitle, then slides (NO other text):`
           }
         ],
-        temperature: 0.9
       },
       {
         headers: {
@@ -323,7 +322,6 @@ REQUIREMENTS:
 OUTPUT: Just the prompt, nothing else.`
           }
         ],
-        temperature: 0.8,
         max_tokens: 150
       },
       {
