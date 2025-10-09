@@ -17,7 +17,7 @@ mdc: true
 
 # Why Cats Are Actually Aliens
 
-- Purrs map star routes nightly
+🎨 A Creative Exploration
 
 <div class="pt-12">
   <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
@@ -34,95 +34,83 @@ mdc: true
 
 ---
 
-# 🛸 Alien Whiskers
-![](/images/slide-1.png)
-
+# 🎯 Short Punchy Title
 
 <v-clicks>
 
-- Purrs map star routes nightly
-- Warp between litter boxes
-- Ask for snacks via telepathy
+- Whiskers reveal cosmic plans
+- Purrs power ship engines
+- Dining table becomes star chart
 
 </v-clicks>
-
 ---
 layout: center
+background: /images/slide-2.png
 ---
 
-# 🛰️ Telepathy 101
-![](/images/slide-2.png)
-
+# 🎯 Short Punchy Title
 
 <v-clicks>
 
-- Communicates snack codes instantly
-- Knows you better than you think
-- Reads mood via tail flip
+- They abduct socks, not ships
+- Training: stare, blink, back away
+- Command center is the litter box
 
 </v-clicks>
-
 ---
 layout: center
+background: /images/slide-3.png
 ---
 
-# 🪐 Galactic Grooming
-![](/images/slide-3.png)
-
+# 🎯 Short Punchy Title
 
 <v-clicks>
 
-- Zaps fur into cosmic patterns
-- Requires zero shampoo, full starshine
-- Loves tuna as grooming gel
+- They vanish when bored
+- Mirrors show slightly suspicious reflection
+- Shadow spots the cat's secret
 
 </v-clicks>
-
 ---
 layout: center
+background: /images/slide-4.png
 ---
 
-# 🧪 Purr Experiments
-![](/images/slide-4.png)
-
+# 🎯 Short Punchy Title
 
 <v-clicks>
 
-- Results show longer naps
-- Test subject: human's blanket
-- Observed zero gravity on yarn
+- Gravity loves their meow
+- They calibrate orbits with fur
+- Politely demand snacks for science
 
 </v-clicks>
-
 ---
 layout: center
+background: /images/slide-5.png
 ---
 
-# 🌌 Cosmic Cat Logic
-![](/images/slide-5.png)
-
+# 🎯 Short Punchy Title
 
 <v-clicks>
 
-- Meow equals cosmic treaty
-- Negotiates with humans via purring
-- All consent is whiskered
+- They negotiate kibble treaties
+- Mandatory bowing at humans
+- Purrs sign peace accords
 
 </v-clicks>
-
 ---
 layout: center
+background: /images/slide-6.png
 ---
 
-# 🛸 Final Reveal
-![](/images/slide-6.png)
-
+# 🎯 Short Punchy Title
 
 <v-clicks>
 
-- Aliens? No, cat-izens
-- Petting privileges retroactively granted
-- Snack protocol becomes interstellar law
+- Humans not included in test run
+- Cats veto space milk policy
+- No refunds for abducted pizza crust
 
 </v-clicks>
 
