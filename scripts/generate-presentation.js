@@ -19,7 +19,7 @@ const {fal} = require('@fal-ai/client');
 
 // Configuration
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4';
+const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-5-nano';
 const FAL_AI_KEY = process.env.FAL_AI_KEY || process.env.FAL_KEY;
 const CUSTOM_TOPIC = process.env.CUSTOM_TOPIC;
 const OUTPUT_DIR = path.join(__dirname, '..', 'presentations');
@@ -285,6 +285,65 @@ async function downloadImage(imageUrl, filePath) {
 }
 
 /**
+ * Generate an image prompt using GPT
+ * Format: Subject + Action + Style + Context in a single sentence
+ */
+async function generateImagePrompt(slideTitle, slideContent) {
+  if (!OPENAI_API_KEY) {
+    // Fallback to template-based prompt if no API key
+    return `A humorous ${slideTitle.toLowerCase()} illustration depicting the concept in a whimsical and exaggerated manner, rendered in a vibrant modern digital art style with bold colors and playful composition, perfect for an engaging PowerPoint Karaoke presentation slide.`;
+  }
+
+  try {
+    const response = await axios.post(
+      'https://api.openai.com/v1/chat/completions',
+      {
+        model: OPENAI_MODEL,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are an expert at creating image generation prompts for AI art models. You create concise, effective prompts that follow the format: Subject + Action + Style + Context, all in a single sentence.'
+          },
+          {
+            role: 'user',
+            content: `Create an image generation prompt for this PowerPoint Karaoke slide:
+
+Title: "${slideTitle}"
+Content: ${slideContent.join(' ')}
+
+REQUIREMENTS:
+- Single sentence format: Subject + Action + Style + Context
+- Subject: The main subject/concept based on the slide title
+- Action: What the subject is doing (make it humorous and exaggerated)
+- Style: Visual style (vibrant modern digital art, bold colors, playful)
+- Context: Purpose (PowerPoint Karaoke presentation slide)
+- Keep it under 60 words
+- Make it fun, engaging, and slightly absurd
+
+OUTPUT: Just the prompt, nothing else.`
+          }
+        ],
+        temperature: 0.8,
+        max_tokens: 150
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    const prompt = response.data.choices[0].message.content.trim();
+    return prompt;
+  } catch (error) {
+    console.error(`⚠️  Error generating prompt with GPT:`, error.message);
+    // Fallback to template-based prompt
+    return `A humorous ${slideTitle.toLowerCase()} illustration depicting the concept in a whimsical and exaggerated manner, rendered in a vibrant modern digital art style with bold colors and playful composition, perfect for an engaging PowerPoint Karaoke presentation slide.`;
+  }
+}
+
+/**
  * Extract slide titles and generate image prompts
  */
 function extractSlidesForImages(content) {
@@ -360,8 +419,8 @@ async function generateSlideImages(content, presentationDir) {
 
   // Generate images for each slide
   for (const slide of slides) {
-    // Create a descriptive prompt: Subject + Action + Style + Context
-    const prompt = `A humorous ${slide.title.toLowerCase()} illustration depicting the concept in a whimsical and exaggerated manner, rendered in a vibrant modern digital art style with bold colors and playful composition, perfect for an engaging PowerPoint Karaoke presentation slide.`;
+    // Generate prompt using GPT (Subject + Action + Style + Context format)
+    const prompt = await generateImagePrompt(slide.title, slide.content);
 
     console.log(`💭 Prompt for slide ${slide.number}: "${prompt}"`);
 
