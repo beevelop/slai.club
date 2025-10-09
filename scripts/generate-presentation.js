@@ -126,29 +126,54 @@ ACT 4 - ESCALATION (Slides 5-6):
 - Dramatic declarations
 - Over-the-top conclusions
 
-ACT 5 - CLIMAX (Slide 7):
+ACT 5 - CLIMAX (Slide 7-8):
 - Epic finale with call-to-action
 - Dramatic quote or statement
 - Leave on a memorable note
 - Maximum absurdity achieved
 
-FORMAT REQUIREMENTS:
+FORMAT REQUIREMENTS - IMAGE-HEAVY STORYTELLING:
 
-LAYOUT OPTIONS (vary these strategically):
-- layout: center (for dramatic reveals)
-- layout: image-right (for "professional" content)
-- layout: image-left (for building credibility)
-- layout: two-cols (for comparisons/contrasts)
-- layout: quote (for shocking quotes during the twist)
-- layout: fact (for dramatic statistics and BIG reveals)
+CRITICAL: AT LEAST 2/3 OF SLIDES MUST USE IMAGE LAYOUTS (image, image-left, or image-right)
+CRITICAL: SLIDE 1 (after cover) MUST ALWAYS USE layout: image
 
-EXAMPLE SLIDE FORMAT:
+LAYOUT USAGE GUIDE:
+1. layout: image - Full-screen image with minimal or no text (use for impact moments, scene-setting)
+2. layout: image-left - Image on left, text on right (use for credible explanations)
+3. layout: image-right - Image on right, text on left (use for building narrative)
+4. layout: fact - Full-screen dramatic text (use sparingly for the big twist reveal)
+5. layout: quote - Full-screen quote (use for climactic moments)
+6. layout: two-cols - Split content (use only if comparison is essential)
 
+LAYOUT DISTRIBUTION (for 8 slides):
+- Slides 1-2: image or image-left/image-right (establish credibility)
+- Slides 3-4: image-left or image-right (build tension)
+- Slide 5: fact (THE TWIST - dramatic reveal)
+- Slides 6-7: image-left or image-right (escalate absurdity)
+- Slide 8: quote or image (epic finale)
+
+EXAMPLE SLIDE FORMATS:
+
+EXAMPLE 1 - Full Image Slide (ALWAYS USE THIS FOR SLIDE 1):
 ---
-layout: center
+layout: image
 ---
 
-# 🐱 Ancient Feline Artifacts
+# 🐱 The Ancient Feline Empire
+
+NOTE: THE VERY FIRST SLIDE AFTER THE COVER SLIDE MUST ALWAYS HAVE:
+---
+layout: image
+---
+
+This is MANDATORY. Do not create slide 1 without frontmatter.
+
+EXAMPLE 2 - Image with Content (most common):
+---
+layout: image-right
+---
+
+# 📊 The Data Speaks
 
 <v-clicks>
 
@@ -158,8 +183,7 @@ layout: center
 
 </v-clicks>
 
-EXAMPLE 2 - THE TWIST MOMENT:
-
+EXAMPLE 3 - THE TWIST MOMENT:
 ---
 layout: fact
 ---
@@ -168,8 +192,7 @@ layout: fact
 ## Cats Are Actually Alien Scouts
 ### They've Been Reporting Back Since Day One
 
-EXAMPLE 3 - Dramatic Quote:
-
+EXAMPLE 4 - Dramatic Quote:
 ---
 layout: quote
 ---
@@ -177,37 +200,16 @@ layout: quote
 # "Every purr is a status update to the mothership"
 ## - Declassified CIA Document, 2043
 
-EXAMPLE 4 - Escalation:
-
----
-layout: two-cols
----
-
-# 📡 The Evidence Mounts
-
-::left::
-
-**Normal Cat Behavior?**
-- Stares at nothing
-- 3 AM zoomies
-- Knocking things off tables
-
-::right::
-
-**OR Secret Mission?**
-- Scanning for threats
-- Testing Earth's gravity
-- Collecting DNA samples
-
 STORYTELLING RULES:
+- ALWAYS use layout: image for slide 1 (first content slide after cover)
+- Use image-left or image-right for at least 5-6 out of 8 slides
 - Start with 2 slides that seem TOTALLY NORMAL and educational
 - Slide 3-4: Plant seeds of doubt with "interesting facts"
-- Slide 4-5: THE BIG TWIST - go completely absurd
-- Slide 5-7: Escalate the absurdity, add "proof"
-- Final slide: Epic conclusion with dramatic statement
-- Use quote layouts for shocking revelations
-- Use fact layouts for dramatic statistics/reveals
-- Build tension through pacing
+- Slide 4-5: THE BIG TWIST - use layout: fact
+- Slide 5-7: Escalate the absurdity with image-left/image-right
+- Final slide: Epic conclusion with quote or image layout
+- ALWAYS wrap bullet points in <v-clicks> tags for image-left and image-right layouts
+- For layout: image, keep text minimal (just the heading)
 
 DRAMATIC TECHNIQUES:
 - Foreshadowing in early slides (subtle hints)
@@ -223,19 +225,20 @@ STRICT FORMATTING RULES:
 - Titles should be witty, punchy, and drive the narrative
 - Each heading needs a relevant emoji
 - Keep headings under 6 words but make them MEANINGFUL
-- Use 2-4 bullet points per slide
+- Use 2-4 bullet points per slide (ONLY for image-left/image-right layouts)
 - Bullet points under 10 words each
+- ALWAYS use <v-clicks> for bullet lists on image-left/image-right
 - NO image tags (![]), NO "Point 1:", NO "Slide 1:"
 - NO commentary between slides
 
 TITLE PROGRESSION EXAMPLE (showing narrative arc):
-1. "🐱 Introduction to House Cats"
-2. "📊 By The Numbers"
-3. "🤔 Strange Behavioral Patterns"
-4. "🛸 THE SHOCKING TRUTH" ← THE TWIST
-5. "🚨 Evidence You Can't Ignore"
-6. "👽 What They Don't Want You To Know"
-7. "⚠️ The Time To Act Is NOW"
+1. "🐱 The Feline Dynasty Begins" (layout: image)
+2. "📊 Population Explosion Data" (layout: image-right)
+3. "🤔 Strange Behavioral Patterns" (layout: image-left)
+4. "🛸 THE SHOCKING TRUTH" (layout: fact) ← THE TWIST
+5. "🚨 Undeniable Evidence Emerges" (layout: image-right)
+6. "👽 Communication Protocols Decoded" (layout: image-left)
+7. "⚠️ The Time To Act Is NOW" (layout: quote)
 
 OUTPUT FORMAT - Start with the first "---" separator immediately:`
           }
@@ -261,6 +264,90 @@ OUTPUT FORMAT - Start with the first "---" separator immediately:`
     console.error('❌ Error calling OpenAI API:', error.response?.data || error.message);
     process.exit(1);
   }
+}
+
+/**
+ * Ensure first slide has layout: image
+ * This is critical for image-heavy storytelling
+ */
+function ensureFirstSlideHasLayout(content) {
+  const lines = content.split('\n');
+  const result = [];
+  let firstSlideFound = false;
+  let inFirstSlideFrontmatter = false;
+  let firstSlideFrontmatterLines = [];
+  let hasLayout = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    // If we hit a heading before any frontmatter, inject frontmatter
+    if (trimmed.startsWith('# ') && !firstSlideFound && !inFirstSlideFrontmatter) {
+      // Add frontmatter before the heading
+      result.push('---');
+      result.push('layout: image');
+      result.push('---');
+      result.push('');
+      result.push(line);
+      firstSlideFound = true;
+      continue;
+    }
+
+    // If we hit a heading while looking for first slide frontmatter,
+    // the frontmatter is empty - inject it before the heading
+    if (trimmed.startsWith('# ') && inFirstSlideFrontmatter) {
+      firstSlideFound = true;
+
+      // Add layout: image to the frontmatter
+      if (!hasLayout) {
+        firstSlideFrontmatterLines.push('layout: image');
+      }
+
+      // Add closing separator
+      firstSlideFrontmatterLines.push('---');
+      result.push(...firstSlideFrontmatterLines);
+      result.push('');  // Empty line after frontmatter
+      result.push(line);  // The heading
+      inFirstSlideFrontmatter = false;
+      continue;
+    }
+
+    // Find the first slide separator after any initial content
+    if (trimmed === '---' && !firstSlideFound) {
+      if (!inFirstSlideFrontmatter) {
+        // Start of first slide frontmatter
+        inFirstSlideFrontmatter = true;
+        firstSlideFrontmatterLines = [line];
+        hasLayout = false;
+      } else {
+        // End of first slide frontmatter
+        firstSlideFound = true;
+
+        // If no layout was specified, add it
+        if (!hasLayout) {
+          firstSlideFrontmatterLines.push('layout: image');
+        }
+
+        firstSlideFrontmatterLines.push(line);
+        result.push(...firstSlideFrontmatterLines);
+        inFirstSlideFrontmatter = false;
+      }
+      continue;
+    }
+
+    if (inFirstSlideFrontmatter) {
+      firstSlideFrontmatterLines.push(line);
+      if (trimmed.startsWith('layout:')) {
+        hasLayout = true;
+      }
+      continue;
+    }
+
+    result.push(line);
+  }
+
+  return result.join('\n');
 }
 
 /**
@@ -334,8 +421,11 @@ function cleanAIResponse(content) {
   
   // Sanitize and fix common markdown/HTML issues
   const sanitized = sanitizeContent(lines.join('\n'));
-  
-  return sanitized;
+
+  // Ensure first slide has layout: image
+  const withLayout = ensureFirstSlideHasLayout(sanitized);
+
+  return withLayout;
 }
 
 /**
@@ -592,34 +682,46 @@ OUTPUT: Just the prompt, nothing else.`
 }
 
 /**
- * Extract slide titles and generate image prompts
+ * Extract slide titles and layouts for image generation
+ * Only extracts slides that use image, image-left, or image-right layouts
  */
 function extractSlidesForImages(content) {
   const slides = [];
   const lines = content.split('\n');
   let currentSlide = null;
   let slideNumber = 0;
-  let inSlideContent = false;
+  let inFrontmatter = false;
+  let currentLayout = null;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
 
     // Check if this is a slide separator
     if (line === '---') {
-      if (currentSlide) {
-        slides.push(currentSlide);
+      if (inFrontmatter) {
+        // End of frontmatter
+        inFrontmatter = false;
+      } else {
+        // Start of new slide - save previous slide if it needs an image
+        if (currentSlide && (currentLayout === 'image' || currentLayout === 'image-left' || currentLayout === 'image-right')) {
+          currentSlide.layout = currentLayout;
+          slides.push(currentSlide);
+        }
         currentSlide = null;
+        currentLayout = null;
+        inFrontmatter = true;
       }
-      inSlideContent = false;
+      continue;
+    }
+
+    // Parse layout from frontmatter
+    if (inFrontmatter && line.startsWith('layout:')) {
+      currentLayout = line.replace('layout:', '').trim();
       continue;
     }
 
     // Check if this is a slide title (starts with # but not ##)
     if (line.match(/^# /)) {
-      if (currentSlide) {
-        slides.push(currentSlide);
-      }
-
       slideNumber++;
       // Extract the title, removing emoji and extra formatting
       let title = line.replace(/^# /, '').trim();
@@ -629,15 +731,20 @@ function extractSlidesForImages(content) {
       currentSlide = {
         number: slideNumber,
         title: title,
-        content: []
+        content: [],
+        layout: currentLayout
       };
-      inSlideContent = true;
-    } else if (currentSlide && line && !line.startsWith('layout:') && !line.startsWith('<')) {
-      currentSlide.content.push(line);
+    } else if (currentSlide && line && !line.startsWith('<')) {
+      // Collect content for the image prompt
+      if (line.startsWith('-')) {
+        currentSlide.content.push(line.replace(/^-\s*/, ''));
+      }
     }
   }
 
-  if (currentSlide) {
+  // Don't forget the last slide
+  if (currentSlide && (currentLayout === 'image' || currentLayout === 'image-left' || currentLayout === 'image-right')) {
+    currentSlide.layout = currentLayout;
     slides.push(currentSlide);
   }
 
@@ -691,49 +798,49 @@ async function generateSlideImages(content, presentationDir) {
 }
 
 /**
- * Inject images as background images in slide frontmatter
- * 
- * This function processes the AI-generated slide content and adds background images
- * to each slide's frontmatter. This ensures images don't cover the bullet points.
- * 
- * Logic:
- * 1. Track frontmatter blocks (between --- markers)
- * 2. Track slide titles (# headings) to number slides
- * 3. When closing a frontmatter block, inject background for the upcoming slide
- * 4. Use slideNumber+1 because we increment slideNumber AFTER seeing the title,
- *    but we need to inject the background BEFORE the title appears
+ * Inject images into slides based on their layout
+ *
+ * For slides with image, image-left, or image-right layouts, this adds
+ * the image property to the frontmatter. Numbering matches the extraction
+ * logic which counts by slide titles (# headings).
  */
 function injectImagesIntoSlides(slidesContent, imageMap) {
   if (Object.keys(imageMap).length === 0) {
-    // No images to inject, return content as-is
     return slidesContent;
   }
 
   const lines = slidesContent.split('\n');
   const result = [];
-  let slideNumber = 0;  // Tracks how many titled slides we've seen so far
+  let slideNumber = 0;
   let inFrontmatter = false;
   let frontmatterLines = [];
-  let currentSlideHasTitle = false;
+  let currentLayout = null;
+  let nextSlideNumber = 0;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const trimmed = line.trim();
 
-    // Detect slide separators (---)
+    // Count slide titles to track slide numbers
+    if (trimmed.match(/^# /) && !inFrontmatter) {
+      slideNumber++;
+    }
+
     if (trimmed === '---') {
       if (!inFrontmatter) {
-        // Start of frontmatter block
+        // Start of frontmatter
         inFrontmatter = true;
         frontmatterLines = [line];
-        currentSlideHasTitle = false;
+        currentLayout = null;
+        // The next slide number will be slideNumber + 1 (haven't seen its title yet)
+        nextSlideNumber = slideNumber + 1;
       } else {
-        // End of frontmatter - inject background if this slide gets an image
-        // We inject for slideNumber+1 because we haven't seen the title yet
-        if (imageMap[slideNumber + 1]) {
-          // Use the image filename directly (Slidev resolves from public/ directory)
-          frontmatterLines.push(`background: /${imageMap[slideNumber + 1]}`);
+        // End of frontmatter - inject image if needed
+        // Check if this slide has an image and uses an image layout
+        if (imageMap[nextSlideNumber] && (currentLayout === 'image' || currentLayout === 'image-left' || currentLayout === 'image-right')) {
+          frontmatterLines.push(`image: /${imageMap[nextSlideNumber]}`);
         }
+
         frontmatterLines.push(line);
         result.push(...frontmatterLines);
         frontmatterLines = [];
@@ -742,16 +849,13 @@ function injectImagesIntoSlides(slidesContent, imageMap) {
       continue;
     }
 
-    // If in frontmatter, collect lines
     if (inFrontmatter) {
       frontmatterLines.push(line);
+      // Track the layout
+      if (trimmed.startsWith('layout:')) {
+        currentLayout = trimmed.replace('layout:', '').trim();
+      }
       continue;
-    }
-
-    // Check if this is a slide title (starts with # but not ##)
-    if (trimmed.match(/^# /) && !currentSlideHasTitle) {
-      slideNumber++;
-      currentSlideHasTitle = true;
     }
 
     result.push(line);
