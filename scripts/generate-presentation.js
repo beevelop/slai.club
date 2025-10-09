@@ -258,10 +258,10 @@ async function generateSlideImages(content, presentationDir) {
 
   // Generate images for each slide
   for (const slide of slides) {
-    // Create a descriptive prompt based on the slide title and content
-    const prompt = `A creative, humorous illustration for a presentation slide titled "${slide.title}".
-The image should be visually engaging, slightly absurd, and suitable for PowerPoint Karaoke.
-Style: modern, colorful, fun illustration.`;
+    // Create a descriptive prompt: Subject + Action + Style + Context
+    const prompt = `A humorous ${slide.title.toLowerCase()} illustration depicting the concept in a whimsical and exaggerated manner, rendered in a vibrant modern digital art style with bold colors and playful composition, perfect for an engaging PowerPoint Karaoke presentation slide.`;
+
+    console.log(`💭 Prompt for slide ${slide.number}: "${prompt}"`);
 
     const imageUrl = await generateImage(prompt, slide.number);
 
