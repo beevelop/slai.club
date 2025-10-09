@@ -98,7 +98,7 @@ This is PowerPoint Karaoke - the presenter has NEVER seen these slides before! Y
 
 CRITICAL: Output ONLY the slide content. NO preamble, NO explanations, NO commentary like "Sure, here you go" or "Remember to...". Start directly with the first slide separator (---).
 
-📖 NARRATIVE STRUCTURE (Create exactly 6-8 slides):
+📖 NARRATIVE STRUCTURE (Create exactly 7-8 slides):
 
 ACT 1 - THE SETUP (Slides 1-2):
 - Start seemingly legitimate and informative
@@ -226,7 +226,7 @@ STRICT FORMATTING RULES:
 - Each heading needs a relevant emoji
 - Keep headings under 6 words but make them MEANINGFUL
 - Use 2-4 bullet points per slide (ONLY for image-left/image-right layouts)
-- Bullet points under 10 words each
+- Bullet points under 20 words each; make it sound reasonable and believable
 - ALWAYS use <v-clicks> for bullet lists on image-left/image-right
 - NO image tags (![]), NO "Point 1:", NO "Slide 1:"
 - NO commentary between slides
