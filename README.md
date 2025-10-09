@@ -7,7 +7,8 @@
 ## 🎯 Features
 
 - **Automated Generation**: Presentations are automatically generated using GitHub Actions on a regular schedule
-- **AI-Powered**: Leverages cutting-edge AI models from fal.ai, Black Forest Labs, and other LLM vendors
+- **AI-Powered Content**: Uses advanced language models to generate creative, engaging presentation content
+- **AI-Generated Images**: Each slide includes a unique AI-generated image using fal.ai's FLUX Schnell model
 - **Markdown-Based**: Built on [Slidev](https://sli.dev/), enabling presentations through simple markdown
 - **Gallery View**: Browse all generated presentations in an easy-to-navigate gallery
 - **GitHub Pages Hosting**: Fully hosted on GitHub Pages for free, reliable access
@@ -15,19 +16,21 @@
 ## 🛠️ Tech Stack
 
 - **[Slidev](https://sli.dev/)** - Markdown-based presentation framework
-- **[fal.ai](https://fal.ai/)** - Fast AI inference platform
-- **[Black Forest Labs](https://blackforestlabs.ai/)** - Advanced image generation models
-- **LLM Vendors** - Various language models for content generation
+- **[@fal-ai/client](https://fal.ai/)** - Fast AI inference platform for image generation
+- **[FLUX Schnell](https://blackforestlabs.ai/)** - Advanced image generation model by Black Forest Labs
+- **OpenAI** - Language models for content generation
 - **GitHub Actions** - Automated workflow orchestration
 - **GitHub Pages** - Static site hosting
 
 ## 🚀 How It Works
 
 1. **Scheduled Trigger**: GitHub Actions workflow runs on a defined schedule
-2. **Content Generation**: AI models generate presentation content and visuals
-3. **Markdown Compilation**: Content is formatted into Slidev-compatible markdown
-4. **Build & Deploy**: Presentations are built and deployed to GitHub Pages
-5. **Gallery Update**: The main page is updated with the new presentation
+2. **Content Generation**: OpenAI generates creative presentation content based on random or custom topics
+3. **Image Generation**: For each slide, fal.ai's FLUX Schnell model generates a unique, themed image
+4. **Image Download**: Generated images are downloaded and saved in the presentation's images folder
+5. **Markdown Compilation**: Content and images are embedded into Slidev-compatible markdown
+6. **Build & Deploy**: Presentations are built and deployed to GitHub Pages
+7. **Gallery Update**: The main page is updated with the new presentation
 
 ## 🔧 Setup
 
@@ -39,7 +42,7 @@ Add the following secrets to your repository (Settings → Secrets and variables
 |------------|----------|-------------|
 | `OPENAI_API_KEY` | **Yes** | Your OpenAI API key from [platform.openai.com](https://platform.openai.com/api-keys) |
 | `OPENAI_MODEL` | No | OpenAI model to use (default: `gpt-4`) |
-| `FAL_AI_KEY` | No | Your fal.ai API key for future image generation from [fal.ai/dashboard](https://fal.ai/dashboard/keys) |
+| `FAL_AI_KEY` or `FAL_KEY` | **Recommended** | Your fal.ai API key for AI image generation from [fal.ai/dashboard](https://fal.ai/dashboard/keys) |
 
 ### 2. Enable GitHub Pages
 
@@ -74,8 +77,8 @@ npm install
 # Set up environment variables
 # Create a .env file with:
 OPENAI_API_KEY=sk-...
-OPENAI_MODEL=gpt-4  # optional
-FAL_AI_KEY=...      # optional
+OPENAI_MODEL=gpt-4          # optional
+FAL_AI_KEY=...              # or FAL_KEY, recommended for images
 
 # Generate a presentation
 npm run generate
@@ -94,7 +97,7 @@ All configuration is done via environment variables:
 | `OPENAI_API_KEY` | **Yes** | - | OpenAI API key for content generation |
 | `OPENAI_MODEL` | No | `gpt-4` | OpenAI model to use (e.g., `gpt-4`, `gpt-4-turbo`, `gpt-3.5-turbo`) |
 | `CUSTOM_TOPIC` | No | Random | Custom presentation topic (overrides random selection) |
-| `FAL_AI_KEY` | No | - | fal.ai API key for image generation (future feature) |
+| `FAL_AI_KEY` or `FAL_KEY` | Recommended | - | fal.ai API key for AI image generation. Without this, presentations will be generated without images. |
 
 ### Customize Generation Schedule
 
@@ -119,6 +122,10 @@ slai.club/
 ├── presentations/                    # Generated presentations (auto-created)
 │   └── YYYY-MM-DD-topic-name/
 │       ├── slides.md                 # Source markdown
+│       ├── images/                   # AI-generated images for slides
+│       │   ├── slide-1.png
+│       │   ├── slide-2.png
+│       │   └── ...
 │       └── dist/                     # Built presentation
 ├── scripts/
 │   └── generate-presentation.js     # AI generation script
