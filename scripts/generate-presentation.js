@@ -19,7 +19,7 @@ const {fal} = require('@fal-ai/client');
 
 // Configuration
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-5-nano';
+const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-5';
 const FAL_AI_KEY = process.env.FAL_AI_KEY || process.env.FAL_KEY;
 const CUSTOM_TOPIC = process.env.CUSTOM_TOPIC;
 const OUTPUT_DIR = path.join(__dirname, '..', 'presentations');
@@ -659,10 +659,10 @@ async function generateSlideImages(content, presentationDir) {
   console.log(`📊 Found ${slides.length} slides to generate images for`);
   const imageMap = {};
 
-  // Create images directory
-  const imagesDir = path.join(presentationDir, 'images');
-  if (!fs.existsSync(imagesDir)) {
-    fs.mkdirSync(imagesDir, { recursive: true });
+  // Create public directory for Slidev (automatically copied during build)
+  const publicDir = path.join(presentationDir, 'public');
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
   }
 
   // Generate images for each slide
@@ -676,11 +676,12 @@ async function generateSlideImages(content, presentationDir) {
 
     if (imageUrl) {
       const imageFileName = `slide-${slide.number}.png`;
-      const imagePath = path.join(imagesDir, imageFileName);
+      const imagePath = path.join(publicDir, imageFileName);
       const downloaded = await downloadImage(imageUrl, imagePath);
 
       if (downloaded) {
-        imageMap[slide.number] = `images/${imageFileName}`;
+        // Use root-relative path without leading slash for Slidev
+        imageMap[slide.number] = `${imageFileName}`;
       }
     }
   }
@@ -729,13 +730,9 @@ function injectImagesIntoSlides(slidesContent, imageMap) {
       } else {
         // End of frontmatter - inject background if this slide gets an image
         // We inject for slideNumber+1 because we haven't seen the title yet
-        // Use absolute path (with leading /) for proper resolution in subdirectories
         if (imageMap[slideNumber + 1]) {
-          // Ensure path starts with / for absolute path from root
-          const imagePath = imageMap[slideNumber + 1].startsWith('/') 
-            ? imageMap[slideNumber + 1] 
-            : `/${imageMap[slideNumber + 1]}`;
-          frontmatterLines.push(`background: ${imagePath}`);
+          // Use the image filename directly (Slidev resolves from public/ directory)
+          frontmatterLines.push(`background: /${imageMap[slideNumber + 1]}`);
         }
         frontmatterLines.push(line);
         result.push(...frontmatterLines);
