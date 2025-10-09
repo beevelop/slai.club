@@ -373,7 +373,7 @@ function updateGalleryIndex(presentationName, title) {
         </div>`;
   } else {
     galleryContent = `<div class="gallery">
-${presentations.map(p => `            <a href="./presentations/${p.name}/index.html" class="card">
+${presentations.map(p => `            <a href="./presentations/${p.name}/dist/index.html" class="card">
                 <h3>${escapeHtml(p.title)}</h3>
                 <p class="date">${formatDate(p.date)}</p>
                 <span class="view-btn">View Presentation →</span>
