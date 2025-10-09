@@ -669,9 +669,13 @@ function injectImagesIntoSlides(slidesContent, imageMap) {
       } else {
         // End of frontmatter - inject background if this slide gets an image
         // We inject for slideNumber+1 because we haven't seen the title yet
-        // Use relative path (without leading /) for GitHub Pages compatibility
+        // Use absolute path (with leading /) for proper resolution in subdirectories
         if (imageMap[slideNumber + 1]) {
-          frontmatterLines.push(`background: ${imageMap[slideNumber + 1]}`);
+          // Ensure path starts with / for absolute path from root
+          const imagePath = imageMap[slideNumber + 1].startsWith('/') 
+            ? imageMap[slideNumber + 1] 
+            : `/${imageMap[slideNumber + 1]}`;
+          frontmatterLines.push(`background: ${imagePath}`);
         }
         frontmatterLines.push(line);
         result.push(...frontmatterLines);
