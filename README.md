@@ -1,153 +1,149 @@
-# slai.club
+<div align="center">
 
-> AI-generated presentations for PowerPoint Karaoke
+# 🎪 slai.club
 
-**slai.club** is an automated presentation generator that creates unique slides for PowerPoint Karaoke using AI. The project combines modern AI technologies to generate creative, engaging presentations on a regular schedule.
+### *Where AI Creates Chaos, One Slide at a Time*
 
-## 🎯 Features
+[![Daily AI Magic](https://img.shields.io/badge/Daily-AI%20Magic-ff69b4?style=for-the-badge)](https://slai.club)
+[![PowerPoint Karaoke](https://img.shields.io/badge/PowerPoint-Karaoke-00d4ff?style=for-the-badge)](https://slai.club)
+[![Absurdity Level](https://img.shields.io/badge/Absurdity-Maximum-ff6b6b?style=for-the-badge)](https://slai.club)
 
-- **Automated Generation**: Presentations are automatically generated using GitHub Actions on a regular schedule
-- **AI-Powered Content**: Uses advanced language models to generate creative, engaging presentation content
-- **AI-Generated Images**: Each slide includes a unique AI-generated image using fal.ai's FLUX Schnell model
-- **Markdown-Based**: Built on [Slidev](https://sli.dev/), enabling presentations through simple markdown
-- **Gallery View**: Browse all generated presentations in an easy-to-navigate gallery
-- **GitHub Pages Hosting**: Fully hosted on GitHub Pages for free, reliable access
+**Every day at 10 AM UTC, an AI wakes up and creates the most delightfully unhinged PowerPoint presentation you've never asked for.**
 
-## 🛠️ Tech Stack
+[🎭 View Gallery](https://slai.club) • [🎲 Random Topic](https://github.com/beevelop/slai.club/actions) • [🤝 Contribute Chaos](#-contributing-chaos)
 
-- **[Slidev](https://sli.dev/)** - Markdown-based presentation framework
-- **[@fal-ai/client](https://fal.ai/)** - Fast AI inference platform for image generation
-- **[FLUX Schnell](https://blackforestlabs.ai/)** - Advanced image generation model by Black Forest Labs
-- **OpenAI** - Language models for content generation
-- **GitHub Actions** - Automated workflow orchestration
-- **GitHub Pages** - Static site hosting
-
-## 🚀 How It Works
-
-1. **Scheduled Trigger**: GitHub Actions workflow runs on a defined schedule
-2. **Content Generation**: OpenAI generates creative presentation content based on random or custom topics
-3. **Image Generation**: For each slide, fal.ai's FLUX Schnell model generates a unique, themed image
-4. **Image Download**: Generated images are downloaded and saved in the presentation's images folder
-5. **Markdown Compilation**: Content and images are embedded into Slidev-compatible markdown
-6. **Build & Deploy**: Presentations are built and deployed to GitHub Pages
-7. **Gallery Update**: The main page is updated with the new presentation
-
-## 🔧 Setup
-
-### 1. Configure GitHub Secrets
-
-Add the following secrets to your repository (Settings → Secrets and variables → Actions):
-
-| Secret Name | Required | Description |
-|------------|----------|-------------|
-| `OPENAI_API_KEY` | **Yes** | Your OpenAI API key from [platform.openai.com](https://platform.openai.com/api-keys) |
-| `OPENAI_MODEL` | No | OpenAI model to use (default: `gpt-4`) |
-| `FAL_AI_KEY` or `FAL_KEY` | **Recommended** | Your fal.ai API key for AI image generation from [fal.ai/dashboard](https://fal.ai/dashboard/keys) |
-
-### 2. Enable GitHub Pages
-
-1. Go to repository Settings → Pages
-2. Under "Source", select:
-   - **Branch**: `main`
-   - **Folder**: `/ (root)`
-3. Click "Save"
-4. Configure your custom domain's DNS to point to GitHub Pages
-
-### 3. Run the Workflow
-
-**Automatic**: Runs daily at 10 AM UTC
-
-**Manual**: 
-1. Go to Actions tab → "Generate AI Presentation"
-2. Click "Run workflow"
-3. Optionally enter a custom topic or leave blank for random
-
-## 📖 Usage
-
-### Browse Presentations
-
-Visit [slai.club](https://slai.club) to browse the gallery of AI-generated presentations.
-
-### Local Development
-
-```bash
-# Install dependencies
-npm install
-
-# Set up environment variables
-# Create a .env file with:
-OPENAI_API_KEY=sk-...
-OPENAI_MODEL=gpt-4          # optional
-FAL_AI_KEY=...              # or FAL_KEY, recommended for images
-
-# Generate a presentation
-npm run generate
-
-# Preview a specific presentation
-cd presentations/[presentation-name]
-npx slidev slides.md
-```
-
-### Environment Variables
-
-All configuration is done via environment variables:
-
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `OPENAI_API_KEY` | **Yes** | - | OpenAI API key for content generation |
-| `OPENAI_MODEL` | No | `gpt-4` | OpenAI model to use (e.g., `gpt-4`, `gpt-4-turbo`, `gpt-3.5-turbo`) |
-| `CUSTOM_TOPIC` | No | Random | Custom presentation topic (overrides random selection) |
-| `FAL_AI_KEY` or `FAL_KEY` | Recommended | - | fal.ai API key for AI image generation. Without this, presentations will be generated without images. |
-
-### Customize Generation Schedule
-
-Edit `.github/workflows/generate-presentation.yml` to change the schedule:
-
-```yaml
-schedule:
-  - cron: '0 10 * * *'  # Daily at 10 AM UTC
-```
-
-Examples:
-- `0 */6 * * *` - Every 6 hours
-- `0 0 * * 1` - Every Monday at midnight
-- `0 12 * * 1-5` - Weekdays at noon
-
-## 📁 Project Structure
-
-```
-slai.club/
-├── .github/workflows/
-│   └── generate-presentation.yml    # GitHub Actions workflow
-├── presentations/                    # Generated presentations (auto-created)
-│   └── YYYY-MM-DD-topic-name/
-│       ├── slides.md                 # Source markdown
-│       ├── images/                   # AI-generated images for slides
-│       │   ├── slide-1.png
-│       │   ├── slide-2.png
-│       │   └── ...
-│       └── dist/                     # Built presentation
-├── scripts/
-│   └── generate-presentation.js     # AI generation script
-├── template/
-│   ├── slides.md                    # Slidev presentation template
-│   └── gallery.html                 # Gallery page template
-├── index.html                       # Gallery homepage (auto-generated)
-├── package.json                     # Dependencies
-└── CNAME                            # Custom domain configuration
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- Open issues for bugs or feature requests
-- Submit pull requests for improvements
-- Share ideas for presentation themes or AI model integrations
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+</div>
 
 ---
 
-Made with ❤️ using AI and automation
+## 🎯 What is this madness?
+
+**slai.club** is an automated PowerPoint Karaoke generator that uses AI to create completely unique, often absurd, always entertaining presentations. Each day, the AI picks a random topic, crafts a compelling (and increasingly ridiculous) narrative, generates custom images, and deploys it to the web.
+
+Think of it as:
+- 🎪 **PowerPoint Karaoke** meets **AI Chaos**
+- 🎭 **Storytelling** with **Unexpected Plot Twists**
+- 🎨 **Art** created by **Sentient Algorithms** (probably)
+- 🎲 **Daily Surprises** you didn't know you needed
+
+### 🌟 Why does this exist?
+
+Because someone has to keep PowerPoint Karaoke fresh, and that someone is an AI. Every morning, a new presentation appears. No human involvement. Just pure algorithmic creativity with a dash of conspiracy theories and a sprinkle of aliens.
+
+---
+
+## 🎪 The Magic Formula
+
+```
+🤖 GPT-5 + 🎨 FLUX Schnell + 📊 Slidev = 🎭 Daily Chaos
+```
+
+Each presentation follows a **5-Act Dramatic Structure**:
+
+1. **Act 1**: Seems totally normal (you're hooked)
+2. **Act 2**: Things get... interesting
+3. **Act 3**: 🛸 **THE PLOT TWIST** (WHAT?!)
+4. **Act 4**: Double down on the absurdity
+5. **Act 5**: Peak chaos achieved
+
+---
+
+## 🚀 Quick Start
+
+### 🎲 Just Want to See the Chaos?
+
+👉 **[Visit slai.club](https://slai.club)** and browse the gallery!
+
+### 🛠️ Want to Run Your Own Chaos Generator?
+
+```bash
+# Clone this beautiful mess
+git clone https://github.com/beevelop/slai.club.git
+
+# Install dependencies
+npm install
+
+# Set up your .env file
+echo "OPENAI_API_KEY=your-key-here" > .env
+echo "FAL_AI_KEY=your-fal-key" >> .env
+
+# Generate chaos
+npm run generate
+```
+
+**That's it.** The AI will handle the rest.
+
+---
+
+## 🤝 Contributing Chaos
+
+We don't do "issues" here. This is a **vibe-based repository**.
+
+### Want to contribute?
+
+1. 🎨 **Fork it**
+2. 🎭 **Make it weirder**
+3. 🎪 **Open a PR with your chaos**
+4. 🎉 **Profit** (spiritually, at least)
+
+### Contribution Ideas
+
+- 🎲 Add more absurd topics to the random pool
+- 🎨 Improve the storytelling prompts (make them WILDER)
+- 🛸 Add new layout templates
+- 🎭 Enhance the dramatic structure
+- 🤪 Break something in an interesting way
+
+**The crazier, the better.** We embrace chaos here.
+
+### No Bug Reports, Only Vibes
+
+Found a bug? That's a **feature** now. But if you REALLY want to fix it:
+
+1. Tell us your **favorite vibe coding technology** (Vim? VS Code? Butterflies?)
+2. Open a PR to fix it with that technology
+3. Include at least one emoji in your commit message
+4. We'll merge it if it makes us laugh
+
+---
+
+## 🎨 Example Topics
+
+Our AI has created presentations about:
+
+- 🧦 *The Secret Life of Left Socks*
+- 🍌 *How Bananas Secretly Control the Stock Market*
+- 🦕 *The Rise and Fall of Disco Dinosaurs*
+- 🍕 *Why Aliens Prefer Pineapple Pizza*
+- 🪨 *How to Train Your Pet Rock*
+- 🦥 *Time Management Tips from Sloths*
+
+**Every. Single. Day.**
+
+---
+
+## 🎯 Tech Stack (for the curious)
+
+- **AI**: GPT-5 for content generation
+- **Images**: FLUX Schnell via fal.ai
+- **Slides**: Slidev (markdown-based presentations)
+- **Automation**: GitHub Actions (because robots work for free)
+- **Hosting**: GitHub Pages (also free)
+
+---
+
+## 📜 License
+
+MIT License - Do whatever you want. Make it weirder.
+
+---
+
+<div align="center">
+
+### 🎭 Made with chaos, AI, and questionable life choices
+
+**[Visit the Gallery](https://slai.club)** • **[Fork & Make Chaos](https://github.com/beevelop/slai.club/fork)**
+
+*Last updated: Every day at 10 AM UTC by our AI overlord*
+
+</div>
