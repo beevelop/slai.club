@@ -81,13 +81,12 @@ async function generateContent() {
             role: 'user',
             content: `Create a PowerPoint Karaoke presentation about "${topic}". 
 
-CRITICAL: Output ONLY the slide content. NO preamble, NO explanations, NO commentary like "Sure, here you go" or "Remember to...". Start directly with the subtitle, then slides.
+CRITICAL: Output ONLY the slide content. NO preamble, NO explanations, NO commentary like "Sure, here you go" or "Remember to...". Start directly with the first slide separator (---).
 
 FORMAT REQUIREMENTS:
 
-1. **First line**: A catchy, short subtitle (just the text, with an emoji if you want)
+Create 5-7 content slides following this EXACT format for EACH slide:
 
-2. **Slides**: Then create 5-7 content slides following this EXACT format:
 ---
 layout: center
 ---
@@ -102,14 +101,18 @@ layout: center
 
 </v-clicks>
 
-RULES:
+STRICT RULES:
+- Start IMMEDIATELY with "---" (slide separator)
 - Each heading needs a relevant emoji
 - Keep headings under 6 words
 - Exactly 3 bullet points per slide
 - Bullet points under 8 words each
 - Make it funny, engaging, and absurd!
+- NO image tags (![]), NO "Point 1:", NO "Slide 1:", NO numbering
+- NO commentary or explanations between slides
+- Just the slides in the exact format shown above
 
-OUTPUT FORMAT - Start with subtitle, then slides (NO other text):`
+OUTPUT FORMAT - Start with the first "---" separator immediately:`
           }
         ],
       },
@@ -126,7 +129,7 @@ OUTPUT FORMAT - Start with subtitle, then slides (NO other text):`
     
     return {
       title: topic,
-      subtitle: extractSubtitle(cleanedContent),
+      subtitle: extractSubtitle(cleanedContent, topic),
       slides: cleanedContent
     };
   } catch (error) {
@@ -169,6 +172,7 @@ function cleanAIResponse(content) {
     /^\d+\.\s+subtitle:/i,
     /^\d+\.\s+slide/i,
     /^subtitle:/i,
+    /^".*"\s*$/,  // Lines that are just quoted text
   ];
   
   while (lines.length > 0) {
@@ -245,7 +249,13 @@ function sanitizeContent(content) {
       continue;
     }
     
-    // Skip lines with problematic patterns
+    // Skip lines with problematic patterns like "**# Slide 1:"
+    if (trimmed.match(/^\*\*#\s+slide/i)) {
+      skipUntilNextSection = true;
+      continue;
+    }
+    
+    // Skip numbered slide patterns
     if (trimmed.match(/^\*\*\d+\.\s+(slide|subtitle|section)/i)) {
       skipUntilNextSection = true;
       continue;
@@ -265,11 +275,19 @@ function sanitizeContent(content) {
       continue;
     }
     
+    // Remove lines that look like "Point 1:" or "- Point 1:"
+    if (trimmed.match(/^-?\s*point\s+\d+:/i)) {
+      continue;
+    }
+    
     // Fix unclosed bold/italic at the end of lines
     line = line.replace(/\*\*\s*$/, '').replace(/\*\s*$/, '');
     
-    // Fix lines that start with unclosed bold
-    if (trimmed.startsWith('**') && !trimmed.substring(2).includes('**')) {
+    // Fix lines that start with unclosed bold or have bold in headings
+    if (trimmed.startsWith('**#')) {
+      // Remove the bold formatting from the heading
+      line = line.replace(/^\s*\*\*/, '');
+    } else if (trimmed.startsWith('**') && !trimmed.substring(2).includes('**')) {
       line = line.replace(/^\s*\*\*\s*/, '');
     }
     
@@ -298,46 +316,24 @@ function sanitizeContent(content) {
 }
 
 /**
- * Extract subtitle from AI response
+ * Generate a catchy subtitle from the title
  */
-function extractSubtitle(content) {
-  const lines = content.split('\n');
+function extractSubtitle(content, title) {
+  // Generate a simple, catchy subtitle based on the title
+  // This adds a bit of fun to the cover slide
+  const subtitles = [
+    '🎯 An AI-Generated Adventure',
+    '🚀 A Journey into the Unknown', 
+    '🎪 Prepare for the Unexpected',
+    '⚡ Buckle Up for This Ride',
+    '🎨 A Creative Exploration',
+    '🌟 Let\'s Dive In!',
+    '🎭 The Show Must Go On',
+    '🔮 Mysteries Await'
+  ];
   
-  // Look for explicit subtitle line
-  for (const line of lines) {
-    if (line.toLowerCase().includes('subtitle') && line.includes(':')) {
-      let subtitle = line.split(':').slice(1).join(':').trim();
-      // Clean up formatting
-      subtitle = subtitle.replace(/^["'*\s]+|["'*\s]+$/g, '').trim();
-      if (subtitle.length > 5) {
-        return subtitle;
-      }
-    }
-  }
-  
-  // Try to find first non-empty line that's not a heading, separator, or layout directive
-  for (const line of lines) {
-    const trimmed = line.trim();
-    // Skip various non-subtitle lines
-    if (trimmed && 
-        !trimmed.startsWith('#') && 
-        !trimmed.startsWith('---') && 
-        !trimmed.startsWith('layout:') &&
-        !trimmed.startsWith('<') &&
-        !trimmed.match(/^\d+\./) &&
-        !trimmed.match(/^\*\*\d+/) &&
-        trimmed !== '**' &&
-        trimmed !== '*' &&
-        trimmed.length > 5) {
-      // Clean up any formatting characters
-      let subtitle = trimmed.replace(/^["'*\s]+|["'*\s]+$/g, '').trim();
-      if (subtitle.length > 5) {
-        return subtitle;
-      }
-    }
-  }
-  
-  return '🎯 An AI-Generated Adventure';
+  // Pick a random subtitle or use a default
+  return subtitles[Math.floor(Math.random() * subtitles.length)];
 }
 
 /**
@@ -561,7 +557,17 @@ async function generateSlideImages(content, presentationDir) {
 }
 
 /**
- * Inject images into slide content (slides already have --- separators)
+ * Inject images as background images in slide frontmatter
+ * 
+ * This function processes the AI-generated slide content and adds background images
+ * to each slide's frontmatter. This ensures images don't cover the bullet points.
+ * 
+ * Logic:
+ * 1. Track frontmatter blocks (between --- markers)
+ * 2. Track slide titles (# headings) to number slides
+ * 3. When closing a frontmatter block, inject background for the upcoming slide
+ * 4. Use slideNumber+1 because we increment slideNumber AFTER seeing the title,
+ *    but we need to inject the background BEFORE the title appears
  */
 function injectImagesIntoSlides(slidesContent, imageMap) {
   if (Object.keys(imageMap).length === 0) {
@@ -571,32 +577,46 @@ function injectImagesIntoSlides(slidesContent, imageMap) {
 
   const lines = slidesContent.split('\n');
   const result = [];
-  let slideNumber = 0;
-  let justFoundTitle = false;
+  let slideNumber = 0;  // Tracks how many titled slides we've seen so far
+  let inFrontmatter = false;
+  let frontmatterLines = [];
+  let currentSlideHasTitle = false;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const trimmed = line.trim();
 
-    // Check if this is a slide title (starts with # but not ##)
-    if (trimmed.match(/^# /)) {
-      slideNumber++;
-      result.push(line);
-      justFoundTitle = true;
+    // Detect slide separators (---)
+    if (trimmed === '---') {
+      if (!inFrontmatter) {
+        // Start of frontmatter block
+        inFrontmatter = true;
+        frontmatterLines = [line];
+        currentSlideHasTitle = false;
+      } else {
+        // End of frontmatter - inject background if this slide gets an image
+        // We inject for slideNumber+1 because we haven't seen the title yet
+        if (imageMap[slideNumber + 1]) {
+          frontmatterLines.push(`background: /${imageMap[slideNumber + 1]}`);
+        }
+        frontmatterLines.push(line);
+        result.push(...frontmatterLines);
+        frontmatterLines = [];
+        inFrontmatter = false;
+      }
       continue;
     }
 
-    // If we just found a title and have an image for this slide, inject it
-    if (justFoundTitle && imageMap[slideNumber]) {
-      // Check if the next line is empty, if not add an empty line
-      if (trimmed !== '') {
-        result.push('');
-      }
-      result.push(`![](/${imageMap[slideNumber]})`);
-      result.push('');
-      justFoundTitle = false;
-    } else {
-      justFoundTitle = false;
+    // If in frontmatter, collect lines
+    if (inFrontmatter) {
+      frontmatterLines.push(line);
+      continue;
+    }
+
+    // Check if this is a slide title (starts with # but not ##)
+    if (trimmed.match(/^# /) && !currentSlideHasTitle) {
+      slideNumber++;
+      currentSlideHasTitle = true;
     }
 
     result.push(line);
