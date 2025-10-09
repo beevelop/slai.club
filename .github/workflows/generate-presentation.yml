@@ -1,0 +1,74 @@
+name: Generate AI Presentation
+
+on:
+  # Run on a schedule (daily at 10 AM UTC)
+  schedule:
+    - cron: '0 10 * * *'
+  
+  # Allow manual triggering with optional custom topic
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Custom presentation topic (optional - random if not provided)'
+        required: false
+        type: string
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # Required to push changes back to the repo
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Generate new presentation
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+          FAL_AI_KEY: ${{ secrets.FAL_AI_KEY }}
+          CUSTOM_TOPIC: ${{ inputs.topic }}
+        run: npm run generate
+      
+      - name: Build all presentations
+        run: |
+          # Build each presentation with Slidev
+          for dir in presentations/*/; do
+            if [ -f "$dir/slides.md" ]; then
+              echo "Building presentation: $dir"
+              cd "$dir"
+              npx slidev build slides.md --base "/presentations/$(basename $dir)/"
+              cd ../..
+            fi
+          done
+      
+      - name: Configure Git
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      
+      - name: Commit and push changes
+        run: |
+          git add presentations/ index.html
+          
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🎨 Add new AI-generated presentation [skip ci]"
+            git push
+          fi
+
