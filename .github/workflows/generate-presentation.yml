@@ -53,8 +53,9 @@ jobs:
               npx slidev build slides.md --base "/presentations/$(basename $dir)/"
               # Move files from dist to parent directory
               if [ -d "dist" ]; then
-                mv dist/* .
-                rmdir dist
+                # Use cp to merge directories, then remove dist
+                cp -r dist/* .
+                rm -rf dist
               fi
               cd ../..
             fi
