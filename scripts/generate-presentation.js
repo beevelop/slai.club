@@ -15,7 +15,7 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const fal = require('@fal-ai/client');
+const {fal} = require('@fal-ai/client');
 
 // Configuration
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
