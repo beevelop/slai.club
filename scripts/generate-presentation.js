@@ -566,12 +566,13 @@ async function generateImage(prompt, slideNumber) {
   try {
     console.log(`🎨 Generating image for slide ${slideNumber}...`);
 
-    const result = await fal.subscribe('fal-ai/flux/schnell', {
+    const result = await fal.subscribe('fal-ai/flux-pro/kontext/max/text-to-image', {
       input: {
         prompt: prompt,
         image_size: 'landscape_16_9',
         num_inference_steps: 4,
-        num_images: 1
+        num_images: 1,
+        output_format: 'jpeg'
       },
       logs: false,
       onQueueUpdate: (update) => {
@@ -782,7 +783,7 @@ async function generateSlideImages(content, presentationDir) {
     const imageUrl = await generateImage(prompt, slide.number);
 
     if (imageUrl) {
-      const imageFileName = `slide-${slide.number}.png`;
+      const imageFileName = `slide-${slide.number}.jpg`;
       const imagePath = path.join(publicDir, imageFileName);
       const downloaded = await downloadImage(imageUrl, imagePath);
 
