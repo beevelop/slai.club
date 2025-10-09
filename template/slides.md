@@ -32,8 +32,6 @@ mdc: true
   </a>
 </div>
 
----
-
 {{SLIDES_CONTENT}}
 
 ---
