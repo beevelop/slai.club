@@ -17,7 +17,7 @@ mdc: true
 
 # Time Travel Through Breakfast Cereals
 
-"Crunching the Past, One Spoonful at a Time"
+**
 
 <div class="pt-12">
   <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
@@ -34,44 +34,77 @@ mdc: true
 
 ---
 
-1. Catchy Subtitle: "Crunching the Past, One Spoonful at a Time"
+Sure, here is your PowerPoint Karaoke presentation about "Time Travel Through Breakfast Cereals". 
 
-Slide Contents:
+**1. A Catchy Subtitle:**  
+"Crunching Chronologies: A Journey of A.M. Munchies Through the Time-Continuum"
 
-# Slide 1: Welcome to the Bowl
-- Point 1: Introduction to the mystical journey of time-travelling cereals.
-- Point 2: A humorous overview of how cereals and time travel might have more in common than you think.
-- Point 3: Dramatic reveal of your time-traveling spoon and your cereal spaceship.
+**2. Slide Contents:**
 
-# Slide 2: Technology Behind Cereal Time Travel
-- Point 1: Explanation of how cereals provide us with the energy to travel through time (especially those with lots of sugar).
-- Point 2: Showcase the evolution of cereal shapes: are they secretly coded time-travel devices?
-- Point 3: Discussion on 'Cereal Paradox' - What happens when you eat an '80s cereal in the 21st century?
+# Slide 1: A Cereal-sly Historic Overview 
 
-# Slide 3: Past Crunches
-- Point 1: Visit the prehistoric era, when the first grains were cultivated, laying the foundation for cereals.
-- Point 2: Tour through cereal's golden age in the 1950s (prepare for some nostalgia).
-- Point 3: Look at the '80s and '90s, the wild west of cereal innovation and gimmickry.
+![](/images/slide-1.png)
 
-# Slide 4: The Sweet Future
-- Point 1: Dystopian future where cereals have become sentient beings.
-- Point 2: The invention of the infinity cereal, which is never-ending, potentially solving world hunger?
-- Point 3: Explore the concept of 'Cereal Time Travel Tourism' - a thriving industry in the future?
+- From ancient grains to sugary rainbow rings
+- The secret life of cereals, before your bowl knew them
+- How cereal revolutionized lazy breakfasts worldwide
 
-# Slide 5: Cereal Time Travel Ethics
-- Point 1: Disability to resist the urge to change past cereal recipes. Is it ethical?
-- Point 2: Impact of cereal time travel on the milk industry.
-- Point 3: The risks involved – such as creating a time paradox by consuming a cereal before it's produced.
 
-# Slide 6: Prepping for Your Journey
-- Point 1: Essential matter of choosing your cereal companion for this exciting journey.
-- Point 2: Selecting the right milk for lubrication of your time machine (Full cream? Skimmed? Plant-based?).
-- Point 3: Survival Guide - How many servings of cereal are too many in a paradox?
+---
 
-# Slide 7: It’s Not the End
-- Point 1: A touching farewell to your time-traveling cereal comrades.
-- Point 2: The enlightening realization that every breakfast is a new adventure in time travel.
-- Point 3: Inviting the audience to share their personal time travel cereal stories.
+# Slide 2: The Jurassic Period: Prehistoric Pops
+
+![](/images/slide-2.png)
+
+- The first breakfast cereals: Now with 100% more dinosaur eggs!
+- The Flintstone’s Fruity Pebbles: More than just a marketing gimmick?
+- Time traveling health fads: Why cavemen really loved their whole grains 
+
+
+---
+
+# Slide 3: The Middle Ages: Oatmeal Crusades & Cereal Monasteries 
+
+![](/images/slide-3.png)
+
+- Wheat Chex of the Dark Ages: A cereal staple for knights and nobles
+- Saintly sustenance: The secret monastery cereal recipe
+- True or False: Instant oatmeal was used as currency during the Middle Ages
+
+
+---
+
+# Slide 4: The Industrial Revolution: Cereal Gets a Makeover
+
+![](/images/slide-4.png)
+
+- The cornflake chronicles: A ploy for a less horny society
+- Cereal mass production: The era of underslept, overworked breakfast eaters
+- The Kellogg's vs Post feud: The most heated rivalry since the Capulets and Montagues
+
+
+---
+
+# Slide 5: The Future: Breakfast Cereals in Space
+
+![](/images/slide-5.png)
+
+- To infinity and beyond: The first cereal to be eaten on the Moon
+- Extraterrestrial edibles: The role of cereal in sustaining Mars colonies
+- Cereal as a potential fuel source: A crunchy revolution?
+
+
+---
+
+# Slide 6: Concluding Cereal Thoughts 
+
+![](/images/slide-6.png)
+
+- Back to the future: What history can tell us about tomorrow's breakfast cereal trends
+- Surviving breakfast: The secret to cereal’s enduring popularity
+- Wrap up: We promise, you can still enjoy your Cheerios tomorrow morning
+
+Remember to have fun with it, and try to incorporate some funny meme-based slides or animations to keep the audience engaged!
 
 ---
 layout: end
