@@ -38,7 +38,7 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
-          FAL_AI_KEY: ${{ secrets.FAL_AI_KEY }}
+          FAL_AI_KEY: ${{ secrets.FAL_KEY }}
           CUSTOM_TOPIC: ${{ inputs.topic }}
         run: npm run generate
       
