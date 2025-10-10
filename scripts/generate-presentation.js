@@ -574,10 +574,13 @@ async function generateImage(prompt, slideNumber) {
         num_images: 1,
         output_format: 'jpeg'
       },
-      logs: false,
+      logs: true,
       onQueueUpdate: (update) => {
         if (update.status === 'IN_PROGRESS') {
-          console.log(`  Progress: ${Math.round((update.logs?.length || 0) * 10)}%`);
+          // Display actual log messages from the API
+          update.logs.map((log) => log.message).forEach((message) => {
+            console.log(`  ${message}`);
+          });
         }
       }
     });
