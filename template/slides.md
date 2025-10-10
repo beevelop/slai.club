@@ -42,3 +42,9 @@ layout: end
 
 Generated with ❤️ by AI at slai.club
 
+<div class="pt-12">
+  <a href="https://slai.club" target="_blank" class="px-6 py-3 rounded-full cursor-pointer inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold" hover="shadow-lg transform scale-105">
+    🎲 Ready for Another Round of Chaos
+  </a>
+</div>
+
