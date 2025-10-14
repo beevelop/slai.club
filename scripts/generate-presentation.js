@@ -921,6 +921,21 @@ function injectImagesIntoSlides(slidesContent, imageMap) {
 }
 
 /**
+ * Escape YAML string value if it contains special characters
+ * Colons, quotes, and other special chars need to be quoted in YAML
+ */
+function escapeYamlValue(value) {
+  // Check if the value contains characters that need quoting in YAML
+  if (value.includes(':') || value.includes('"') || value.includes("'") ||
+      value.includes('#') || value.includes('&') || value.includes('*') ||
+      value.includes('[') || value.includes(']') || value.includes('{') || value.includes('}')) {
+    // Escape any existing double quotes and wrap in double quotes
+    return `"${value.replace(/"/g, '\\"')}"`;
+  }
+  return value;
+}
+
+/**
  * Create presentation from template
  */
 async function createPresentation(content) {
@@ -945,9 +960,9 @@ async function createPresentation(content) {
   // Read template
   let template = fs.readFileSync(TEMPLATE_PATH, 'utf8');
 
-  // Replace placeholders
+  // Replace placeholders with properly escaped YAML values
   template = template
-    .replace(/\{\{TITLE\}\}/g, content.title)
+    .replace(/\{\{TITLE\}\}/g, escapeYamlValue(content.title))
     .replace(/\{\{SUBTITLE\}\}/g, content.subtitle)
     .replace(/\{\{SLIDES_CONTENT\}\}/g, slidesWithImages);
 
