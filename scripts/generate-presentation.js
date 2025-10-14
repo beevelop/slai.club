@@ -94,7 +94,7 @@ ${inspirationTopics.slice(0, 10).join('\n')}
 TOPICS TO AVOID (already used):
 ${existingTopics.join('\n')}
 
-SEED: ${seed}
+DATE CONTEXT: ${seed} (use this to influence your creative direction for today's unique topic)
 
 REQUIREMENTS:
 - Must be completely different from the topics above
@@ -106,7 +106,6 @@ REQUIREMENTS:
 OUTPUT: Just the topic title, nothing else.`
           }
         ],
-        seed: parseInt(seed), // Use seed for deterministic generation
         temperature: 0.9 // High creativity
       },
       {
