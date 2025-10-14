@@ -42,12 +42,12 @@ if (!fs.existsSync(OUTPUT_DIR)) {
 }
 
 /**
- * Generate a unique topic using AI based on inspiration topics
- * This ensures we don't repeat topics but maintain the absurdist style
+ * Generate a unique topic by selecting from unused inspiration topics
+ * Uses date-based seeding for consistent daily selection
  */
-async function generateUniqueTopic(existingTopics) {
-  // Reference topics to inspire the AI (not used directly)
-  const inspirationTopics = [
+function generateUniqueTopic(existingTopics) {
+  // All available topics
+  const allTopics = [
     'The Secret Life of Left Socks',
     'How Bananas Secretly Control the Stock Market',
     '101 Uses for Unused Gift Cards',
@@ -67,62 +67,44 @@ async function generateUniqueTopic(existingTopics) {
     'Interpreting the Art of Cheese Sculpting',
     'Unexplained Phenomena: Haunted Tupperware',
     'A Beginner\'s Guide to Competitive Sleepwalking',
-    'How Unicorns Lost Their Jobs to Narwhals'
+    'How Unicorns Lost Their Jobs to Narwhals',
+    'The Economics of Invisible Ink',
+    'Why Rubber Ducks Make Better CEOs',
+    'Underground Networks of Garden Gnomes',
+    'The Conspiracy of Matching Socks',
+    'Quantum Mechanics of Toast Landing',
+    'The Philosophical Implications of Elevator Music',
+    'How Plants Communicate Through WiFi',
+    'The Ancient Art of Procrastination',
+    'Why Pigeons Are Actually Surveillance Drones',
+    'The Hidden History of Bubble Wrap',
+    'Professional Clouds: A Career Guide',
+    'The Psychology of Shopping Cart Returns',
+    'Time Travel via Microwave Ovens',
+    'The Secret Society of Left-Handed Scissors',
+    'Why Cats Are Actually Liquid',
+    'The Metaphysics of Parking Space Availability',
+    'A Deep Dive into Conspiracy Theories About Pigeons',
+    'The Untold Story of Forgotten Passwords',
+    'How to Speak Dolphin: A Business Guide',
+    'The Renaissance of Fax Machines'
   ];
 
-  // Generate seed from current date to ensure different topics each day
-  const today = new Date().toISOString().split('T')[0];
-  const seed = today.split('-').join(''); // e.g., "20251013"
+  // Filter out already used topics
+  const availableTopics = allTopics.filter(topic => !existingTopics.includes(topic));
 
-  try {
-    const response = await axios.post(
-      'https://api.openai.com/v1/chat/completions',
-      {
-        model: OPENAI_MODEL,
-        messages: [
-          {
-            role: 'system',
-            content: 'You are a creative comedy writer who generates unique, absurd PowerPoint Karaoke topics. Generate topics that are hilarious, unexpected, and perfect for impromptu presentations.'
-          },
-          {
-            role: 'user',
-            content: `Generate a unique PowerPoint Karaoke topic that is absurd, funny, and memorable.
-
-INSPIRATION TOPICS (use these as style reference, DO NOT reuse them):
-${inspirationTopics.slice(0, 10).join('\n')}
-
-TOPICS TO AVOID (already used):
-${existingTopics.join('\n')}
-
-DATE CONTEXT: ${seed} (use this to influence your creative direction for today's unique topic)
-
-REQUIREMENTS:
-- Must be completely different from the topics above
-- Should be absurd and funny
-- 3-8 words long
-- Can involve: mundane objects with secret lives, conspiracy theories, unexpected historical events, impossible jobs, surreal scenarios
-- Format examples: "The [Adjective] [Noun]", "Why [Subject] [Verb]", "[Subject]: [Subtitle]", "How [Subject] [Verb]"
-
-OUTPUT: Just the topic title, nothing else.`
-          }
-        ],
-        temperature: 0.9 // High creativity
-      },
-      {
-        headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-          'Content-Type': 'application/json'
-        }
-      }
-    );
-
-    const topic = response.data.choices[0].message.content.trim().replace(/^["']|["']$/g, '');
-    return topic;
-  } catch (error) {
-    console.error('⚠️  Error generating unique topic:', error.message);
-    // Fallback to inspiration topics if API fails
-    return inspirationTopics[Math.floor(Math.random() * inspirationTopics.length)];
+  // If we've used all topics, reset and allow reuse
+  if (availableTopics.length === 0) {
+    console.log('⚠️  All topics have been used, allowing reuse');
+    return allTopics[Math.floor(Math.random() * allTopics.length)];
   }
+
+  // Use date-based seeding for consistent daily selection
+  const today = new Date().toISOString().split('T')[0];
+  const seed = parseInt(today.replace(/-/g, ''), 10); // e.g., "20251014" -> 20251014
+  const index = seed % availableTopics.length;
+
+  return availableTopics[index];
 }
 
 /**
@@ -145,7 +127,7 @@ async function generateContent() {
   if (CUSTOM_TOPIC) {
     topic = CUSTOM_TOPIC;
   } else {
-    topic = await generateUniqueTopic(existingTopics);
+    topic = generateUniqueTopic(existingTopics);
   }
   console.log(`📝 Topic: ${topic}`);
   
