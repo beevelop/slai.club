@@ -41,25 +41,28 @@ jobs:
           FAL_AI_KEY: ${{ secrets.FAL_KEY }}
           CUSTOM_TOPIC: ${{ inputs.topic }}
         run: npm run generate
-      
-      - name: Build all presentations
+
+      - name: Build new presentation only
         run: |
-          # Build each presentation with Slidev
-          for dir in presentations/*/; do
-            if [ -f "$dir/slides.md" ]; then
-              echo "Building presentation: $dir"
-              cd "$dir"
-              # Build to dist folder
-              npx slidev build slides.md --base "/presentations/$(basename $dir)/"
-              # Move files from dist to parent directory
-              if [ -d "dist" ]; then
-                # Use cp to merge directories, then remove dist
-                cp -r dist/* .
-                rm -rf dist
-              fi
-              cd ../..
+          # Find the most recently modified presentation directory
+          LATEST_DIR=$(ls -td presentations/*/ | head -1)
+
+          if [ -f "$LATEST_DIR/slides.md" ]; then
+            echo "Building newly generated presentation: $LATEST_DIR"
+            cd "$LATEST_DIR"
+            # Build to dist folder
+            npx slidev build slides.md --base "/presentations/$(basename $LATEST_DIR)/"
+            # Move files from dist to parent directory
+            if [ -d "dist" ]; then
+              # Use cp to merge directories, then remove dist
+              cp -r dist/* .
+              rm -rf dist
             fi
-          done
+            cd ../..
+          else
+            echo "Error: No slides.md found in $LATEST_DIR"
+            exit 1
+          fi
       
       - name: Configure Git
         run: |
