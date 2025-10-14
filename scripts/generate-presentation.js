@@ -42,18 +42,12 @@ if (!fs.existsSync(OUTPUT_DIR)) {
 }
 
 /**
- * Generate presentation content using LLM
+ * Generate a unique topic using AI based on inspiration topics
+ * This ensures we don't repeat topics but maintain the absurdist style
  */
-async function generateContent() {
-  console.log('🤖 Generating presentation content with AI...');
-  
-  if (!OPENAI_API_KEY) {
-    console.error('❌ OPENAI_API_KEY is required. Please set it in your environment or .env file.');
-    process.exit(1);
-  }
-  
-  // Example topics for PowerPoint Karaoke
-  const topics = [
+async function generateUniqueTopic(existingTopics) {
+  // Reference topics to inspire the AI (not used directly)
+  const inspirationTopics = [
     'The Secret Life of Left Socks',
     'How Bananas Secretly Control the Stock Market',
     '101 Uses for Unused Gift Cards',
@@ -67,16 +61,93 @@ async function generateContent() {
     'Treehouse WiFi Networks - Fact or Fiction?',
     'Parallel Universes in Your Refrigerator',
     'Why Do We Yawn at Zebras?',
-    'Secrets of the Moon’s Cheese Supply',
+    'Secrets of the Moon\'s Cheese Supply',
     'High Fashion for Goldfish',
     'WiFi Passwords of the Illuminati',
     'Interpreting the Art of Cheese Sculpting',
     'Unexplained Phenomena: Haunted Tupperware',
-    'A Beginner’s Guide to Competitive Sleepwalking',
+    'A Beginner\'s Guide to Competitive Sleepwalking',
     'How Unicorns Lost Their Jobs to Narwhals'
   ];
-  
-  const topic = CUSTOM_TOPIC || topics[Math.floor(Math.random() * topics.length)];
+
+  // Generate seed from current date to ensure different topics each day
+  const today = new Date().toISOString().split('T')[0];
+  const seed = today.split('-').join(''); // e.g., "20251013"
+
+  try {
+    const response = await axios.post(
+      'https://api.openai.com/v1/chat/completions',
+      {
+        model: OPENAI_MODEL,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a creative comedy writer who generates unique, absurd PowerPoint Karaoke topics. Generate topics that are hilarious, unexpected, and perfect for impromptu presentations.'
+          },
+          {
+            role: 'user',
+            content: `Generate a unique PowerPoint Karaoke topic that is absurd, funny, and memorable.
+
+INSPIRATION TOPICS (use these as style reference, DO NOT reuse them):
+${inspirationTopics.slice(0, 10).join('\n')}
+
+TOPICS TO AVOID (already used):
+${existingTopics.join('\n')}
+
+SEED: ${seed}
+
+REQUIREMENTS:
+- Must be completely different from the topics above
+- Should be absurd and funny
+- 3-8 words long
+- Can involve: mundane objects with secret lives, conspiracy theories, unexpected historical events, impossible jobs, surreal scenarios
+- Format examples: "The [Adjective] [Noun]", "Why [Subject] [Verb]", "[Subject]: [Subtitle]", "How [Subject] [Verb]"
+
+OUTPUT: Just the topic title, nothing else.`
+          }
+        ],
+        seed: parseInt(seed), // Use seed for deterministic generation
+        temperature: 0.9 // High creativity
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    const topic = response.data.choices[0].message.content.trim().replace(/^["']|["']$/g, '');
+    return topic;
+  } catch (error) {
+    console.error('⚠️  Error generating unique topic:', error.message);
+    // Fallback to inspiration topics if API fails
+    return inspirationTopics[Math.floor(Math.random() * inspirationTopics.length)];
+  }
+}
+
+/**
+ * Generate presentation content using LLM
+ */
+async function generateContent() {
+  console.log('🤖 Generating presentation content with AI...');
+
+  if (!OPENAI_API_KEY) {
+    console.error('❌ OPENAI_API_KEY is required. Please set it in your environment or .env file.');
+    process.exit(1);
+  }
+
+  // Get existing presentations to avoid topic repetition
+  const existingPresentations = getExistingPresentations();
+  const existingTopics = existingPresentations.map(p => p.title);
+
+  // Generate unique topic or use custom topic
+  let topic;
+  if (CUSTOM_TOPIC) {
+    topic = CUSTOM_TOPIC;
+  } else {
+    topic = await generateUniqueTopic(existingTopics);
+  }
   console.log(`📝 Topic: ${topic}`);
   
   try {
@@ -921,15 +992,19 @@ function updateGalleryIndex(presentationName, title) {
   // Check if this presentation already exists in the list
   const existingIndex = presentations.findIndex(p => p.name === presentationName);
   if (existingIndex !== -1) {
-    // Update existing entry
-    presentations[existingIndex].date = new Date().toISOString();
+    // Update existing entry but preserve the original date
     presentations[existingIndex].title = title;
+    // Keep the original date from presentations[existingIndex].date
   } else {
+    // Extract date from the presentation folder name (format: YYYY-MM-DD-slug)
+    const dateMatch = presentationName.match(/^(\d{4}-\d{2}-\d{2})/);
+    const presentationDate = dateMatch ? new Date(dateMatch[1]).toISOString() : new Date().toISOString();
+
     // Add new entry at the beginning
     presentations.unshift({
       name: presentationName,
       title: title,
-      date: new Date().toISOString()
+      date: presentationDate
     });
   }
   
