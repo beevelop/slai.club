@@ -47,10 +47,12 @@ image: /slide-2.jpg
 # 📦 From Wallpaper to Wow
 
 <v-clicks>
+
 - 1957: Fielding and Chavannes test textured wallpaper
 - 1960: Sealed Air founded to market the material
 - 1959: IBM uses it to ship 1401 safely
 - Early marketing called it "Air Cap" insulation
+
 </v-clicks>
 
 ---
@@ -61,9 +63,11 @@ image: /slide-3.jpg
 # 🔍 Footnotes That Vanish
 
 <v-clicks>
+
 - Patent draft references "ambient whispers" then redacted
 - Rutgers lab reports odd static harmonics near 432 Hz
 - Warehouse logs note "pops at night, with no workers"
+
 </v-clicks>
 
 ---
@@ -74,9 +78,11 @@ image: /slide-4.jpg
 # 📈 The Pop Paradox
 
 <v-clicks>
+
 - Breakage rates drop; stray compass needles spike
 - Pop festivals coincide with migratory birds rerouting
 - 12% of people report "tiny breeze" from sealed sheets
+
 </v-clicks>
 
 ---
@@ -95,9 +101,11 @@ image: /slide-6.jpg
 # 🧪 Unethical Lab Pops
 
 <v-clicks>
+
 - Popped 1,000 bubbles: lights flickered; clocks gained 7 seconds
 - Mice avoided popped zones; built nests on intact sheets
 - Spectrometer detected "non-air" signatures: labels read UNKNOWN-43
+
 </v-clicks>
 
 ---
@@ -108,9 +116,11 @@ image: /slide-7.jpg
 # 🗺️ The Map Reveals Itself
 
 <v-clicks>
+
 - Sheet grids match star positions of the Perseus Anomaly
 - Sequential pops transmit prime pulses below human hearing
 - Sealed Air HQ sits on a ley line labeled "VALVE"
+
 </v-clicks>
 
 ---

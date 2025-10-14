@@ -488,68 +488,80 @@ function sanitizeContent(content) {
   let result = [];
   let inVClicks = false;
   let skipUntilNextSection = false;
-  
+
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i];
     const trimmed = line.trim();
-    
+
     // Reset skip flag when we hit a new slide
     if (trimmed === '---' || trimmed.match(/^# /)) {
       skipUntilNextSection = false;
     }
-    
+
     // Track <v-clicks> tags
     if (trimmed === '<v-clicks>') {
       inVClicks = true;
       result.push(line);
+      // Ensure there's a blank line after <v-clicks> for proper MDC parsing
+      const nextLine = i + 1 < lines.length ? lines[i + 1].trim() : '';
+      if (nextLine !== '' && !nextLine.startsWith('-')) {
+        result.push('');
+      } else if (nextLine.startsWith('-')) {
+        // Next line is a bullet, ensure blank line
+        result.push('');
+      }
       continue;
     }
-    
+
     if (trimmed === '</v-clicks>') {
+      // Ensure there's a blank line before </v-clicks> for proper MDC parsing
+      if (result.length > 0 && result[result.length - 1].trim() !== '') {
+        result.push('');
+      }
       inVClicks = false;
       result.push(line);
       continue;
     }
-    
+
     // Skip lines that are just formatting characters
     if (trimmed === '**' || trimmed === '*' || trimmed === '__' || trimmed === '_') {
       continue;
     }
-    
+
     // Skip lines with problematic patterns like "**# Slide 1:"
     if (trimmed.match(/^\*\*#\s+slide/i)) {
       skipUntilNextSection = true;
       continue;
     }
-    
+
     // Skip numbered slide patterns
     if (trimmed.match(/^\*\*\d+\.\s+(slide|subtitle|section)/i)) {
       skipUntilNextSection = true;
       continue;
     }
-    
+
     if (trimmed.match(/^\d+\.\s+\*\*?(slide|subtitle|section)/i)) {
       skipUntilNextSection = true;
       continue;
     }
-    
+
     if (skipUntilNextSection) {
       continue;
     }
-    
+
     // Skip additional AI commentary patterns
     if (trimmed.match(/^(presentation title|slide \d+:|slide contents?:)/i)) {
       continue;
     }
-    
+
     // Remove lines that look like "Point 1:" or "- Point 1:"
     if (trimmed.match(/^-?\s*point\s+\d+:/i)) {
       continue;
     }
-    
+
     // Fix unclosed bold/italic at the end of lines
     line = line.replace(/\*\*\s*$/, '').replace(/\*\s*$/, '');
-    
+
     // Fix lines that start with unclosed bold or have bold in headings
     if (trimmed.startsWith('**#')) {
       // Remove the bold formatting from the heading
@@ -557,28 +569,29 @@ function sanitizeContent(content) {
     } else if (trimmed.startsWith('**') && !trimmed.substring(2).includes('**')) {
       line = line.replace(/^\s*\*\*\s*/, '');
     }
-    
+
     // Remove markdown bold formatting from headings (they're already bold)
     if (trimmed.startsWith('# ')) {
       line = line.replace(/\*\*/g, '');
     }
-    
+
     // Clean up malformed quotes
     line = line.replace(/^["']\s*$/, '');
-    
+
     result.push(line);
   }
-  
+
   // Ensure all <v-clicks> are closed
   if (inVClicks) {
+    result.push('');
     result.push('</v-clicks>');
   }
-  
+
   // Remove any trailing empty lines
   while (result.length > 0 && result[result.length - 1].trim() === '') {
     result.pop();
   }
-  
+
   return result.join('\n');
 }
 
@@ -1054,12 +1067,15 @@ function getExistingPresentations() {
       const content = fs.readFileSync(slidesPath, 'utf8');
       const titleMatch = content.match(/^# (.+)$/m);
       const title = titleMatch ? titleMatch[1] : dir;
-      const stats = fs.statSync(slidesPath);
-      
+
+      // Extract date from folder name (format: YYYY-MM-DD-slug)
+      const dateMatch = dir.match(/^(\d{4}-\d{2}-\d{2})/);
+      const date = dateMatch ? new Date(dateMatch[1]).toISOString() : new Date().toISOString();
+
       return {
         name: dir,
         title: title,
-        date: stats.mtime.toISOString()
+        date: date
       };
     })
     .sort((a, b) => new Date(b.date) - new Date(a.date));
