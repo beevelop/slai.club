@@ -5,7 +5,7 @@ class: text-center
 highlighter: shiki
 lineNumbers: false
 info: |
-  ## "Unexplained Phenomena: Haunted Tupperware"
+  ## Unexplained Phenomena: Haunted Tupperware
   
   AI-generated presentation for PowerPoint Karaoke
 drawings:
@@ -15,7 +15,7 @@ title: "Unexplained Phenomena: Haunted Tupperware"
 mdc: true
 ---
 
-# "Unexplained Phenomena: Haunted Tupperware"
+# Unexplained Phenomena: Haunted Tupperware
 
 🎭 Plot Twist Guaranteed
 

@@ -42,11 +42,24 @@ if (!fs.existsSync(OUTPUT_DIR)) {
 }
 
 /**
+ * Normalize a topic/title for comparison
+ * Converts to lowercase, removes special characters, and normalizes whitespace
+ */
+function normalizeTopic(topic) {
+  return topic
+    .toLowerCase()
+    .replace(/["""'']/g, '')  // Remove all quote variants
+    .replace(/[^a-z0-9\s]/g, ' ')  // Replace special chars with space
+    .replace(/\s+/g, ' ')  // Normalize whitespace
+    .trim();
+}
+
+/**
  * Generate a unique topic by selecting from unused inspiration topics
  * Uses date-based seeding for consistent daily selection
  */
 function generateUniqueTopic(existingTopics) {
-  // All available topics
+  // All available topics - expanded list for more variety
   const allTopics = [
     'The Secret Life of Left Socks',
     'How Bananas Secretly Control the Stock Market',
@@ -87,19 +100,49 @@ function generateUniqueTopic(existingTopics) {
     'A Deep Dive into Conspiracy Theories About Pigeons',
     'The Untold Story of Forgotten Passwords',
     'How to Speak Dolphin: A Business Guide',
-    'The Renaissance of Fax Machines'
+    'The Renaissance of Fax Machines',
+    // Additional topics for more variety
+    'The Underground Economy of Office Supplies',
+    'Why Squirrels Are Planning World Domination',
+    'The Secret Language of Vending Machines',
+    'Interdimensional Tourism on a Budget',
+    'How Houseplants Judge Your Life Choices',
+    'The Cryptocurrency of Ancient Rome',
+    'Why Birds Sing in Binary Code',
+    'The Psychology of Mismatched Tupperware Lids',
+    'Corporate Yoga for Sentient AI',
+    'The Hidden Cost of Free Samples',
+    'Why Your Alarm Clock Hates You',
+    'Blockchain for Beginners (and Cats)',
+    'The Diplomatic Relations Between Ants and Crumbs',
+    'How to Negotiate with a Stapler',
+    'The Feng Shui of Server Rooms',
+    'Why Monday Is a Government Conspiracy',
+    'The True Purpose of Junk Drawers',
+    'Emotional Support Water Bottles',
+    'The Stock Market of Dreams',
+    'Why Refrigerator Light Goes Off (Or Does It?)'
   ];
 
-  // Filter out already used topics
-  const availableTopics = allTopics.filter(topic => !existingTopics.includes(topic));
+  // Normalize existing topics for comparison
+  const normalizedExisting = existingTopics.map(normalizeTopic);
+  
+  // Filter out already used topics using normalized comparison
+  const availableTopics = allTopics.filter(topic => {
+    const normalizedTopic = normalizeTopic(topic);
+    return !normalizedExisting.some(existing => existing === normalizedTopic);
+  });
 
-  // If we've used all topics, reset and allow reuse
+  console.log(`📊 Topics: ${allTopics.length} total, ${availableTopics.length} available, ${allTopics.length - availableTopics.length} used`);
+
+  // If we've used all topics, generate a new unique topic with AI
   if (availableTopics.length === 0) {
-    console.log('⚠️  All topics have been used, allowing reuse');
+    console.log('⚠️  All predefined topics have been used! Consider adding more topics to the list.');
+    // Pick a random topic as fallback - this shouldn't happen with 60 topics
     return allTopics[Math.floor(Math.random() * allTopics.length)];
   }
 
-  // Use date-based seeding for consistent daily selection
+  // Use date-based seeding combined with available topic count for consistent daily selection
   const today = new Date().toISOString().split('T')[0];
   const seed = parseInt(today.replace(/-/g, ''), 10); // e.g., "20251014" -> 20251014
   const index = seed % availableTopics.length;
@@ -139,160 +182,134 @@ async function generateContent() {
         messages: [
           {
             role: 'system',
-            content: 'You are a master storyteller and comedy writer creating PowerPoint Karaoke presentations. Your presentations follow a compelling narrative arc with dramatic moments and unexpected plot twists. Generate ONLY valid Slidev markdown content - no explanations, no commentary, just the slides. Create presentations that start plausible but become increasingly absurd, culminating in a surprise twist that catches the presenter off-guard.'
+            content: 'You are a stand-up comedian and corporate presentation expert creating PowerPoint Karaoke presentations. Your specialty is making presentations that start completely normal and professional, then gradually reveal an absurd underlying truth that makes the presenter do a double-take. Your humor style combines internet memes, corporate jargon parody, and clever wordplay. Never be random for randomness sake - every joke should land because it subverts expectations in a smart way.'
           },
           {
             role: 'user',
             content: `Create a PowerPoint Karaoke presentation about "${topic}".
 
-🎭 STORYTELLING MISSION:
-This is PowerPoint Karaoke - the presenter has NEVER seen these slides before! Your goal is to craft a compelling narrative that starts reasonable, builds tension, and then completely derails with an absurd twist around slide 4-5 that will make the presenter go "WAIT, WHAT?!"
+🎤 POWERPOINT KARAOKE CONTEXT:
+The presenter has NEVER seen these slides. They must improvise a presentation in front of an audience. Your job is to:
+1. Start with slides they can confidently present (building false confidence)
+2. Gradually introduce content that makes them question reality
+3. Hit them with a twist that gets the audience laughing
+4. Give them a dramatic finish they can ham up for laughs
 
-CRITICAL: Output ONLY the slide content. NO preamble, NO explanations, NO commentary like "Sure, here you go" or "Remember to...". Start directly with the first slide separator (---).
+CRITICAL: Output ONLY the slide content. NO preamble, NO explanations, NO commentary. Start directly with "---".
 
-📖 NARRATIVE STRUCTURE (Create exactly 7-8 slides):
+🎭 COMEDY STRUCTURE (exactly 7-8 slides):
 
-ACT 1 - THE SETUP (Slides 1-2):
-- Start seemingly legitimate and informative
-- Establish credibility with "facts"
-- Hook the presenter with interesting information
-- Make them think "okay, this is going somewhere..."
+SLIDES 1-2: THE CORPORATE OPENER
+- Professional, TED-talk energy
+- Real-sounding statistics (make them specific: "73.4% of respondents...")
+- Buzzwords the presenter can lean into ("synergy", "paradigm shift", "disruption")
+- Set up the premise as if it's a serious business presentation
 
-ACT 2 - RISING TENSION (Slides 3-4):
-- Introduce increasingly questionable claims
-- Add dramatic statistics or bold statements
-- Build suspense with mysterious implications
-- Start hinting something isn't quite right
+SLIDES 3-4: THE SLOW BURN
+- Facts start getting... oddly specific
+- Introduce a detail that seems off but could be real
+- Plant seeds like "Since the incident of 1987..." or "After the Great [Topic] Awakening..."
+- The presenter should start to sense something is wrong
 
-ACT 3 - THE TWIST (Slide 4-5 - THE SURPRISE MOMENT):
-- COMPLETELY change direction with absurd revelation
-- Introduce ridiculous conspiracy theory OR
-- Reveal secret villain/hero OR
-- Time travel/aliens/supernatural element OR
-- Connect to completely unrelated topic
-- This should make the presenter pause and go "...WHAT?!"
+SLIDE 5: THE RECORD SCRATCH MOMENT 🎵
+- Full "wait, what?" energy
+- Reveal the absurd truth behind everything
+- Make it a complete 180 that recontextualizes slides 1-4
+- Examples: "It was the dolphins all along", "This is actually a cult recruitment presentation", "We've been describing the plot of Shrek"
 
-ACT 4 - ESCALATION (Slides 5-6):
-- Double down on the absurdity
-- Add more ridiculous "evidence"
-- Dramatic declarations
-- Over-the-top conclusions
+SLIDES 6-7: DOUBLE DOWN WITH CONFIDENCE
+- Treat the absurd premise as completely normal
+- Add "evidence" with deadpan delivery
+- Include references the audience will recognize (memes, pop culture, internet jokes)
+- Corporate jargon about the absurd topic: "Our Q3 projections for interdimensional travel..."
 
-ACT 5 - CLIMAX (Slide 7-8):
-- Epic finale with call-to-action
-- Dramatic quote or statement
-- Leave on a memorable note
-- Maximum absurdity achieved
+SLIDE 8: THE MIC DROP
+- Dramatic call-to-action or quote
+- Give the presenter something fun to deliver with gravitas
+- End on something quotable and memorable
 
-FORMAT REQUIREMENTS - IMAGE-HEAVY STORYTELLING:
+🎨 HUMOR TECHNIQUES TO USE:
+- Bait-and-switch: Set up normal, deliver absurd
+- Specific absurdity: "Exactly 847 rubber ducks" is funnier than "many rubber ducks"
+- Corporate parody: Use business jargon for ridiculous things
+- Callback humor: Reference something from slide 1-2 in the twist
+- Pop culture nods: Reference memes, movies, internet culture tastefully
+- Puns and wordplay: Especially in titles
+- Deadpan delivery: Present absurd facts matter-of-factly
+- Escalation: Each slide should be slightly more unhinged than the last
 
-CRITICAL: AT LEAST 2/3 OF SLIDES MUST USE IMAGE LAYOUTS (image, image-left, or image-right)
-CRITICAL: SLIDE 1 (after cover) MUST ALWAYS USE layout: image
+LAYOUT REQUIREMENTS:
 
-LAYOUT USAGE GUIDE:
-1. layout: image - Full-screen image with minimal or no text (use for impact moments, scene-setting)
-2. layout: image-left - Image on left, text on right (use for credible explanations)
-3. layout: image-right - Image on right, text on left (use for building narrative)
-4. layout: fact - Full-screen dramatic text (use sparingly for the big twist reveal)
-5. layout: quote - Full-screen quote (use for climactic moments)
-6. layout: two-cols - Split content (use only if comparison is essential)
+CRITICAL: 2/3+ of slides MUST use image layouts
+SLIDE 1 MUST use: layout: image
 
-LAYOUT DISTRIBUTION (for 8 slides):
-- Slides 1-2: image or image-left/image-right (establish credibility)
-- Slides 3-4: image-left or image-right (build tension)
-- Slide 5: fact (THE TWIST - dramatic reveal)
-- Slides 6-7: image-left or image-right (escalate absurdity)
-- Slide 8: quote or image (epic finale)
+LAYOUTS:
+- layout: image → Full-screen visual, minimal text (scene-setting)
+- layout: image-right → Image right, text left (explaining "facts")
+- layout: image-left → Image left, text right (building narrative)
+- layout: fact → Big text only (THE TWIST - use for slide 5)
+- layout: quote → Quote format (use for finale)
 
-EXAMPLE SLIDE FORMATS:
+SLIDE FORMAT EXAMPLES:
 
-EXAMPLE 1 - Full Image Slide (ALWAYS USE THIS FOR SLIDE 1):
+SLIDE 1 (Always this format):
 ---
 layout: image
 ---
 
-# 🐱 The Ancient Feline Empire
+# 🦆 The Rubber Duck Economy
 
-NOTE: THE VERY FIRST SLIDE AFTER THE COVER SLIDE MUST ALWAYS HAVE:
----
-layout: image
----
-
-This is MANDATORY. Do not create slide 1 without frontmatter.
-
-EXAMPLE 2 - Image with Content (most common):
+CONTENT SLIDE:
 ---
 layout: image-right
 ---
 
-# 📊 The Data Speaks
+# 📈 Market Growth Projections
 
 <v-clicks>
 
-- First domesticated in Egypt 3000 BC
-- Worshipped as sacred guardians
-- 73 million cats in US homes today
+- Global rubber duck market: $847M annually
+- 73.4% of bathtubs contain at least one duck
+- "Duck density" correlates with GDP growth
 
 </v-clicks>
 
-EXAMPLE 3 - THE TWIST MOMENT:
+THE TWIST:
 ---
 layout: fact
 ---
 
-# 🛸 PLOT TWIST
-## Cats Are Actually Alien Scouts
-### They've Been Reporting Back Since Day One
+# 🚨 CLASSIFIED DISCOVERY
+## Rubber Ducks Are Currency
+### From Another Dimension
 
-EXAMPLE 4 - Dramatic Quote:
+EPIC FINALE:
 ---
 layout: quote
 ---
 
-# "Every purr is a status update to the mothership"
-## - Declassified CIA Document, 2043
+# "In the end, we were all just ducks in someone else's bathtub"
+## - Warren Buffett (probably)
 
-STORYTELLING RULES:
-- ALWAYS use layout: image for slide 1 (first content slide after cover)
-- Use image-left or image-right for at least 5-6 out of 8 slides
-- Start with 2 slides that seem TOTALLY NORMAL and educational
-- Slide 3-4: Plant seeds of doubt with "interesting facts"
-- Slide 4-5: THE BIG TWIST - use layout: fact
-- Slide 5-7: Escalate the absurdity with image-left/image-right
-- Final slide: Epic conclusion with quote or image layout
-- ALWAYS wrap bullet points in <v-clicks> tags for image-left and image-right layouts
-- For layout: image, keep text minimal (just the heading)
+✍️ WRITING RULES:
+- NEVER use generic titles like "Introduction" or "Conclusion"
+- Every title needs a relevant emoji
+- Titles should be punchy and intriguing (under 6 words)
+- Bullet points: 2-4 per slide, under 20 words each
+- ALWAYS wrap bullets in <v-clicks> tags
+- Make statistics sound real but be obviously made up on reflection
+- NO image tags, NO "Slide 1:", NO explanations between slides
 
-DRAMATIC TECHNIQUES:
-- Foreshadowing in early slides (subtle hints)
-- Use of "But wait...", "However...", "The Truth Is..."
-- Dramatic emojis (🚨, ⚠️, 🛸, 👁️, 💥, 🔥)
-- ALL CAPS for shocking moments
-- Numbers that get progressively more absurd
-- "Experts say...", "Studies show...", "Evidence suggests..."
+TITLE EXAMPLES (showing progression):
+1. "🦆 The Duck Index Explained" (layout: image) - sounds legit
+2. "📊 Surprising Adoption Rates" (layout: image-right) - still normal
+3. "🤔 The Patterson Anomaly" (layout: image-left) - wait, what Patterson?
+4. "⚡ When Ducks Achieved Sentience" (layout: fact) - THE TWIST
+5. "🌍 Global Duck Communication Grid" (layout: image-right) - doubling down
+6. "🔮 The Prophecy Unfolds" (layout: image-left) - escalating
+7. "🎭 Quack or Be Quacked" (layout: quote) - mic drop
 
-STRICT FORMATTING RULES:
-- Start IMMEDIATELY with "---" (slide separator)
-- Each heading MUST be a UNIQUE, CREATIVE title
-- Titles should be witty, punchy, and drive the narrative
-- Each heading needs a relevant emoji
-- Keep headings under 6 words but make them MEANINGFUL
-- Use 2-4 bullet points per slide (ONLY for image-left/image-right layouts)
-- Bullet points under 20 words each; make it sound reasonable and believable
-- ALWAYS use <v-clicks> for bullet lists on image-left/image-right
-- NO image tags (![]), NO "Point 1:", NO "Slide 1:"
-- NO commentary between slides
-
-TITLE PROGRESSION EXAMPLE (showing narrative arc):
-1. "🐱 The Feline Dynasty Begins" (layout: image)
-2. "📊 Population Explosion Data" (layout: image-right)
-3. "🤔 Strange Behavioral Patterns" (layout: image-left)
-4. "🛸 THE SHOCKING TRUTH" (layout: fact) ← THE TWIST
-5. "🚨 Undeniable Evidence Emerges" (layout: image-right)
-6. "👽 Communication Protocols Decoded" (layout: image-left)
-7. "⚠️ The Time To Act Is NOW" (layout: quote)
-
-OUTPUT FORMAT - Start with the first "---" separator immediately:`
+START IMMEDIATELY with "---":`
           }
         ],
       },
@@ -688,16 +705,97 @@ async function downloadImage(imageUrl, filePath) {
 }
 
 /**
- * Generate an image prompt using GPT
- * Format: Subject + Action + Style + Context in a single sentence
+ * Visual style options for consistent presentation imagery
+ * Based on Black Forest Labs best practices for FLUX models
  */
-async function generateImagePrompt(slideTitle, slideContent) {
+const VISUAL_STYLES = [
+  {
+    name: 'Cinematic Documentary',
+    baseStyle: 'cinematic documentary photography, shot on RED camera, anamorphic lens flares',
+    lighting: 'dramatic side lighting with deep shadows',
+    colorGrade: 'teal and orange color grading, high contrast',
+    texture: 'film grain texture, shallow depth of field'
+  },
+  {
+    name: 'Retro Corporate',
+    baseStyle: '1980s corporate photography aesthetic, vintage Kodachrome film',
+    lighting: 'warm tungsten office lighting',
+    colorGrade: 'warm vintage tones, slightly faded colors',
+    texture: 'subtle film grain, soft focus edges'
+  },
+  {
+    name: 'Surreal Editorial',
+    baseStyle: 'surrealist editorial photography, high-fashion magazine aesthetic',
+    lighting: 'dramatic studio lighting with colored gels',
+    colorGrade: 'bold saturated colors, high contrast',
+    texture: 'crisp details, clean backgrounds'
+  },
+  {
+    name: 'Noir Mystery',
+    baseStyle: 'neo-noir cinematography, chiaroscuro lighting',
+    lighting: 'single hard light source casting dramatic shadows',
+    colorGrade: 'desaturated with selective color pops',
+    texture: 'high contrast black and white with grain'
+  },
+  {
+    name: 'Wes Anderson',
+    baseStyle: 'Wes Anderson film still, symmetrical composition, whimsical staging',
+    lighting: 'soft diffused natural light',
+    colorGrade: 'pastel color palette, vintage warmth',
+    texture: 'clean sharp focus, theatrical staging'
+  },
+  {
+    name: 'Scientific Illustration',
+    baseStyle: 'scientific illustration meets photography, museum exhibit style',
+    lighting: 'clean even lighting, museum display quality',
+    colorGrade: 'natural accurate colors on neutral background',
+    texture: 'extremely detailed, educational clarity'
+  },
+  {
+    name: 'Dreamy Ethereal',
+    baseStyle: 'ethereal dreamlike photography, soft focus lens',
+    lighting: 'golden hour backlit glow',
+    colorGrade: 'soft pastels with light leaks',
+    texture: 'soft gaussian blur, luminous highlights'
+  },
+  {
+    name: 'Bold Pop Art',
+    baseStyle: 'pop art photography, Andy Warhol inspired',
+    lighting: 'flat even lighting for graphic effect',
+    colorGrade: 'bold primary colors, high saturation',
+    texture: 'halftone dot pattern, screen print aesthetic'
+  }
+];
+
+/**
+ * Generate a visual style guide for the entire presentation
+ * This ensures consistent imagery throughout all slides
+ */
+async function generateVisualStyleGuide(topic, slides) {
+  console.log('🎨 Generating visual style guide for consistent imagery...');
+  
+  // Select a random visual style for this presentation
+  const selectedStyle = VISUAL_STYLES[Math.floor(Math.random() * VISUAL_STYLES.length)];
+  console.log(`📷 Selected style: ${selectedStyle.name}`);
+  
   if (!OPENAI_API_KEY) {
-    // Fallback to template-based prompt if no API key
-    return `A humorous ${slideTitle.toLowerCase()} illustration depicting the concept in a whimsical and exaggerated manner, rendered in a vibrant modern digital art style with bold colors and playful composition, perfect for an engaging PowerPoint Karaoke presentation slide.`;
+    // Fallback to basic style guide
+    return {
+      styleName: selectedStyle.name,
+      baseStyle: selectedStyle.baseStyle,
+      lighting: selectedStyle.lighting,
+      colorGrade: selectedStyle.colorGrade,
+      texture: selectedStyle.texture,
+      narrativeArc: 'Professional start, building tension, surreal climax',
+      visualMotifs: [topic.split(' ')[0].toLowerCase()],
+      avoidElements: ['text', 'words', 'letters', 'numbers', 'signs', 'labels', 'logos', 'watermarks']
+    };
   }
 
   try {
+    // Extract slide titles for narrative understanding
+    const slideTitles = slides.map((s, i) => `${i + 1}. ${s.title}`).join('\n');
+    
     const response = await axios.post(
       'https://api.openai.com/v1/chat/completions',
       {
@@ -705,31 +803,31 @@ async function generateImagePrompt(slideTitle, slideContent) {
         messages: [
           {
             role: 'system',
-            content: 'You are an expert at creating image generation prompts for AI art models. You create concise, effective prompts that match the narrative tone of PowerPoint Karaoke presentations - from credible to absurd. Follow the format: Subject + Action + Style + Mood, all in a single sentence.'
+            content: 'You are a visual director creating a cohesive image style guide for a presentation. Your goal is to define visual elements that will create a consistent, cinematic look across all images while supporting the narrative arc.'
           },
           {
             role: 'user',
-            content: `Create an image generation prompt for this PowerPoint Karaoke slide:
+            content: `Create a visual style guide for a PowerPoint Karaoke presentation about "${topic}".
 
-Title: "${slideTitle}"
-Content: ${slideContent.join(' ')}
+SELECTED BASE STYLE: ${selectedStyle.name}
+- Base: ${selectedStyle.baseStyle}
+- Lighting: ${selectedStyle.lighting}
+- Colors: ${selectedStyle.colorGrade}
+- Texture: ${selectedStyle.texture}
 
-REQUIREMENTS:
-- Single sentence format: Subject + Action + Style + Mood
-- Subject: The main subject/concept based on the slide title
-- Action: What the subject is doing (match the absurdity level of the slide)
-- Style: Visual style that matches the content:
-  * Early slides: Professional, clean, documentary-style
-  * Middle slides: Slightly dramatic, mysterious, intriguing
-  * Twist slides: Dramatic, conspiracy-theory aesthetic, shocking
-  * Late slides: Maximum absurdity, over-the-top, surreal
-- Mood: Match the dramatic intensity of the slide content
-- Keep it under 60 words
-- If title contains words like "TRUTH", "SHOCKING", "EVIDENCE", "CONSPIRACY": Make it dramatic and intense
-- If title is straightforward: Keep it professional but engaging
-- If title is absurd: Go full surreal and exaggerated
+SLIDE PROGRESSION:
+${slideTitles}
 
-OUTPUT: Just the prompt, nothing else.`
+Generate a JSON object with:
+{
+  "narrativeArc": "Brief description of visual progression from professional to absurd",
+  "recurringSubject": "A visual element/character that can appear throughout (NOT the literal topic)",
+  "visualMotifs": ["3-4 recurring visual elements that tie images together"],
+  "environmentProgression": "How the setting/environment changes through slides",
+  "moodProgression": "How the mood/atmosphere escalates"
+}
+
+OUTPUT: Only the JSON object, no explanation.`
           }
         ]
       },
@@ -741,12 +839,148 @@ OUTPUT: Just the prompt, nothing else.`
       }
     );
 
-    const prompt = response.data.choices[0].message.content.trim();
+    let styleGuide;
+    try {
+      const content = response.data.choices[0].message.content.trim();
+      // Extract JSON from response (handle markdown code blocks)
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      styleGuide = jsonMatch ? JSON.parse(jsonMatch[0]) : {};
+    } catch (e) {
+      styleGuide = {};
+    }
+
+    return {
+      styleName: selectedStyle.name,
+      baseStyle: selectedStyle.baseStyle,
+      lighting: selectedStyle.lighting,
+      colorGrade: selectedStyle.colorGrade,
+      texture: selectedStyle.texture,
+      narrativeArc: styleGuide.narrativeArc || 'Professional to surreal progression',
+      recurringSubject: styleGuide.recurringSubject || null,
+      visualMotifs: styleGuide.visualMotifs || [],
+      environmentProgression: styleGuide.environmentProgression || 'Office to dreamscape',
+      moodProgression: styleGuide.moodProgression || 'Calm to intense',
+      avoidElements: ['text', 'words', 'letters', 'numbers', 'signs', 'labels', 'logos', 'watermarks', 'captions', 'titles', 'typography', 'writing']
+    };
+  } catch (error) {
+    console.error(`⚠️  Error generating style guide:`, error.message);
+    return {
+      styleName: selectedStyle.name,
+      baseStyle: selectedStyle.baseStyle,
+      lighting: selectedStyle.lighting,
+      colorGrade: selectedStyle.colorGrade,
+      texture: selectedStyle.texture,
+      narrativeArc: 'Professional start, building tension, surreal climax',
+      visualMotifs: [],
+      avoidElements: ['text', 'words', 'letters', 'numbers', 'signs', 'labels', 'logos', 'watermarks']
+    };
+  }
+}
+
+/**
+ * Generate an image prompt using GPT following BFL best practices
+ * Format: Subject + Action + Style + Context (FLUX Prompt Framework)
+ * 
+ * Key BFL Best Practices:
+ * 1. Structured prompts: Subject → Action → Style → Context
+ * 2. Be specific and descriptive (exact colors, detailed descriptions)
+ * 3. Use technical photography terms for realism
+ * 4. Avoid negative prompts - describe what you want, not what you don't
+ * 5. Layer details systematically
+ */
+async function generateImagePrompt(slideTitle, slideContent, slideIndex, totalSlides, styleGuide) {
+  // Calculate where we are in the narrative arc (0-1)
+  const narrativeProgress = slideIndex / Math.max(totalSlides - 1, 1);
+  
+  // Determine the narrative phase
+  let narrativePhase;
+  if (narrativeProgress < 0.3) {
+    narrativePhase = 'OPENING (professional, credible, corporate)';
+  } else if (narrativeProgress < 0.6) {
+    narrativePhase = 'BUILDING (hints of strangeness, subtle surrealism)';
+  } else if (narrativeProgress < 0.8) {
+    narrativePhase = 'TWIST (dramatic revelation, visual shock)';
+  } else {
+    narrativePhase = 'CLIMAX (full surreal, maximum visual impact)';
+  }
+
+  if (!OPENAI_API_KEY) {
+    // Fallback to template-based prompt following BFL framework
+    return `${slideTitle.replace(/[^\w\s]/g, '')} scene, ${styleGuide.baseStyle}, ${styleGuide.lighting}, ${styleGuide.colorGrade}, ${styleGuide.texture}, pure visual composition with absolutely no text or writing visible`;
+  }
+
+  try {
+    const response = await axios.post(
+      'https://api.openai.com/v1/chat/completions',
+      {
+        model: OPENAI_MODEL,
+        messages: [
+          {
+            role: 'system',
+            content: `You are an expert at creating image prompts for Black Forest Labs FLUX models. You follow the BFL Prompt Framework strictly:
+
+STRUCTURE: Subject + Action + Style + Context
+
+RULES:
+1. NEVER include any text, words, letters, numbers, signs, labels, or typography in your prompts
+2. Focus purely on VISUAL elements - scenes, objects, lighting, composition
+3. Use specific, detailed descriptions (exact colors, precise actions)
+4. Include technical photography terms (camera settings, lens types, lighting setups)
+5. Describe what you WANT to see, never what you don't want
+6. Keep prompts under 75 words but highly descriptive
+7. The image should be self-explanatory without needing text`
+          },
+          {
+            role: 'user',
+            content: `Create an image prompt for slide ${slideIndex + 1} of ${totalSlides}.
+
+SLIDE TITLE: "${slideTitle}"
+SLIDE CONTENT: ${slideContent.join(' ') || 'Visual emphasis slide'}
+
+PRESENTATION NARRATIVE PHASE: ${narrativePhase}
+
+CONSISTENT VISUAL STYLE (use throughout):
+- Style: ${styleGuide.baseStyle}
+- Lighting: ${styleGuide.lighting}
+- Colors: ${styleGuide.colorGrade}
+- Texture: ${styleGuide.texture}
+${styleGuide.recurringSubject ? `- Recurring Subject: ${styleGuide.recurringSubject}` : ''}
+${styleGuide.visualMotifs?.length ? `- Visual Motifs: ${styleGuide.visualMotifs.join(', ')}` : ''}
+
+NARRATIVE CONTEXT:
+- Overall Arc: ${styleGuide.narrativeArc}
+- Environment Progression: ${styleGuide.environmentProgression}
+- Mood Progression: ${styleGuide.moodProgression}
+
+CRITICAL: Generate ONLY visual elements. The image must contain ZERO text, words, signs, labels, or any written content.
+
+FORMAT: Follow BFL framework - Subject (what/who) + Action (doing what) + Style (${styleGuide.styleName}) + Context (where/when/mood)
+
+OUTPUT: Just the prompt, no quotes, no explanation.`
+          }
+        ]
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    let prompt = response.data.choices[0].message.content.trim();
+    
+    // Remove any quotes that might wrap the prompt
+    prompt = prompt.replace(/^["']|["']$/g, '');
+    
+    // Append explicit instruction to avoid text (BFL models respond well to end-of-prompt emphasis)
+    prompt += ', purely visual composition, no text or writing visible anywhere in the image';
+    
     return prompt;
   } catch (error) {
     console.error(`⚠️  Error generating prompt with GPT:`, error.message);
     // Fallback to template-based prompt
-    return `A humorous ${slideTitle.toLowerCase()} illustration depicting the concept in a whimsical and exaggerated manner, rendered in a vibrant modern digital art style with bold colors and playful composition, perfect for an engaging PowerPoint Karaoke presentation slide.`;
+    return `${slideTitle.replace(/[^\w\s]/g, '')} scene, ${styleGuide.baseStyle}, ${styleGuide.lighting}, ${styleGuide.colorGrade}, ${styleGuide.texture}, purely visual composition with no text or writing`;
   }
 }
 
@@ -821,7 +1055,8 @@ function extractSlidesForImages(content) {
 }
 
 /**
- * Generate images for all slides
+ * Generate images for all slides with consistent style
+ * Uses a visual style guide to ensure cohesive imagery throughout
  */
 async function generateSlideImages(content, presentationDir) {
   if (!FAL_AI_KEY) {
@@ -833,6 +1068,24 @@ async function generateSlideImages(content, presentationDir) {
 
   const slides = extractSlidesForImages(content.slides);
   console.log(`📊 Found ${slides.length} slides to generate images for`);
+  
+  if (slides.length === 0) {
+    return {};
+  }
+
+  // Generate a consistent visual style guide for the entire presentation
+  const styleGuide = await generateVisualStyleGuide(content.title, slides);
+  console.log(`\n📋 Visual Style Guide:`);
+  console.log(`   Style: ${styleGuide.styleName}`);
+  console.log(`   Narrative: ${styleGuide.narrativeArc}`);
+  if (styleGuide.recurringSubject) {
+    console.log(`   Recurring Subject: ${styleGuide.recurringSubject}`);
+  }
+  if (styleGuide.visualMotifs?.length) {
+    console.log(`   Visual Motifs: ${styleGuide.visualMotifs.join(', ')}`);
+  }
+  console.log('');
+
   const imageMap = {};
 
   // Create public directory for Slidev (automatically copied during build)
@@ -841,12 +1094,21 @@ async function generateSlideImages(content, presentationDir) {
     fs.mkdirSync(publicDir, { recursive: true });
   }
 
-  // Generate images for each slide
-  for (const slide of slides) {
-    // Generate prompt using GPT (Subject + Action + Style + Context format)
-    const prompt = await generateImagePrompt(slide.title, slide.content);
+  // Generate images for each slide with consistent style
+  for (let i = 0; i < slides.length; i++) {
+    const slide = slides[i];
+    
+    // Generate prompt using GPT with BFL framework and style guide
+    const prompt = await generateImagePrompt(
+      slide.title, 
+      slide.content, 
+      i,                    // Current slide index
+      slides.length,        // Total slides for narrative progress
+      styleGuide           // Consistent style guide
+    );
 
-    console.log(`💭 Prompt for slide ${slide.number}: "${prompt}"`);
+    console.log(`\n💭 Slide ${slide.number} (${Math.round((i / Math.max(slides.length - 1, 1)) * 100)}% through narrative):`);
+    console.log(`   "${prompt.substring(0, 120)}${prompt.length > 120 ? '...' : ''}"`);
 
     const imageUrl = await generateImage(prompt, slide.number);
 
@@ -862,7 +1124,7 @@ async function generateSlideImages(content, presentationDir) {
     }
   }
 
-  console.log(`✅ Generated ${Object.keys(imageMap).length} images`);
+  console.log(`\n✅ Generated ${Object.keys(imageMap).length} images with consistent ${styleGuide.styleName} style`);
   return imageMap;
 }
 
@@ -949,11 +1211,29 @@ function escapeYamlValue(value) {
 }
 
 /**
+ * Sanitize a title by removing quotes and other problematic characters
+ */
+function sanitizeTitle(title) {
+  return title
+    .replace(/^["'""'']+|["'""'']+$/g, '')  // Remove leading/trailing quotes (including smart quotes)
+    .replace(/["'""'']/g, "'")  // Replace internal quotes with simple apostrophe
+    .trim();
+}
+
+/**
  * Create presentation from template
  */
 async function createPresentation(content) {
+  // Sanitize the title before using it
+  content.title = sanitizeTitle(content.title);
+  
   const timestamp = new Date().toISOString().split('T')[0];
-  const slug = content.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  // Create clean slug: lowercase, replace special chars, remove trailing dashes
+  const slug = content.title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')  // Replace non-alphanumeric with dashes
+    .replace(/^-+|-+$/g, '')  // Remove leading/trailing dashes
+    .replace(/-+/g, '-');  // Collapse multiple dashes
   const presentationName = `${timestamp}-${slug}`;
   const presentationDir = path.join(OUTPUT_DIR, presentationName);
 

@@ -5,7 +5,7 @@ class: text-center
 highlighter: shiki
 lineNumbers: false
 info: |
-  ## "The Unsung Heroes: Traffic Cones"
+  ## The Unsung Heroes: Traffic Cones
   
   AI-generated presentation for PowerPoint Karaoke
 drawings:
@@ -15,7 +15,7 @@ title: "The Unsung Heroes: Traffic Cones"
 mdc: true
 ---
 
-# "The Unsung Heroes: Traffic Cones"
+# The Unsung Heroes: Traffic Cones
 
 🌟 A Story That Defies Logic
 

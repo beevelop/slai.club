@@ -5,7 +5,7 @@ class: text-center
 highlighter: shiki
 lineNumbers: false
 info: |
-  ## "Professional Clouds: A Career Guide"
+  ## Professional Clouds: A Career Guide
   
   AI-generated presentation for PowerPoint Karaoke
 drawings:
@@ -15,7 +15,7 @@ title: "Professional Clouds: A Career Guide"
 mdc: true
 ---
 
-# "Professional Clouds: A Career Guide"
+# Professional Clouds: A Career Guide
 
 🚨 The Truth They Don't Want You To Know
 

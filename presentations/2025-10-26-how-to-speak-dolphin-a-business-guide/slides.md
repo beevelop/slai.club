@@ -5,7 +5,7 @@ class: text-center
 highlighter: shiki
 lineNumbers: false
 info: |
-  ## "How to Speak Dolphin: A Business Guide"
+  ## How to Speak Dolphin: A Business Guide
   
   AI-generated presentation for PowerPoint Karaoke
 drawings:
@@ -15,7 +15,7 @@ title: "How to Speak Dolphin: A Business Guide"
 mdc: true
 ---
 
-# "How to Speak Dolphin: A Business Guide"
+# How to Speak Dolphin: A Business Guide
 
 🛸 Prepare For The Unexpected
 

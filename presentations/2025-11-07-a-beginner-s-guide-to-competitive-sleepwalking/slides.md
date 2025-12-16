@@ -5,7 +5,7 @@ class: text-center
 highlighter: shiki
 lineNumbers: false
 info: |
-  ## "A Beginner's Guide to Competitive Sleepwalking"
+  ## A Beginner's Guide to Competitive Sleepwalking
   
   AI-generated presentation for PowerPoint Karaoke
 drawings:
@@ -15,7 +15,7 @@ title: "A Beginner's Guide to Competitive Sleepwalking"
 mdc: true
 ---
 
-# "A Beginner's Guide to Competitive Sleepwalking"
+# A Beginner's Guide to Competitive Sleepwalking
 
 🛸 Prepare For The Unexpected
 

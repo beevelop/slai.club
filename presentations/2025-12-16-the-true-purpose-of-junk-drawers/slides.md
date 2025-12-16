@@ -5,17 +5,17 @@ class: text-center
 highlighter: shiki
 lineNumbers: false
 info: |
-  ## Flat Earth: The Real Pancake Theory
+  ## The True Purpose of Junk Drawers
   
   AI-generated presentation for PowerPoint Karaoke
 drawings:
   persist: false
 transition: slide-left
-title: "Flat Earth: The Real Pancake Theory"
+title: The True Purpose of Junk Drawers
 mdc: true
 ---
 
-# Flat Earth: The Real Pancake Theory
+# The True Purpose of Junk Drawers
 
 🚨 The Truth They Don't Want You To Know
 
@@ -37,20 +37,21 @@ layout: image
 image: /slide-1.jpg
 ---
 
-# 🥞 The Real Pancake Theory
+# 🧭 The Junk Drawer Index
 
 ---
 layout: image-right
 image: /slide-2.jpg
 ---
 
-# 📐 Layered Geology 101
+# 📊 Adoption & Behavior
 
 <v-clicks>
 
-- Crust averages ~35 km over 12,742 km diameter
-- Thin layers behave like stacked crepes in models
-- Heat spreads laterally, like batter on hot steel
+- 73.4% maintain 1–2 “multi‑purpose” drawers
+- Median retrieval time: 46s; success rate 81%
+- Top assets: rubber bands (5–12), chargers (2.7), twist ties (8.47)
+- Strategic role: low‑frequency asset parking, just‑in‑case synergy
 
 </v-clicks>
 
@@ -59,13 +60,14 @@ layout: image-left
 image: /slide-3.jpg
 ---
 
-# 🧭 Horizons And Routes
+# 🤔 The 1987 Anomaly
 
 <v-clicks>
 
-- Local horizons look level at human scale
-- Long flights favor sweeping arcs on flat maps
-- Ocean gyres trace ring-like boundaries
+- Post‑1987, 62% standardized on “second drawer from left”
+- Allen keys per drawer tripled; usage unchanged
+- One mystery key persists per drawer, audit‑proof
+- Warranty manuals migrate within 24h of purchase
 
 </v-clicks>
 
@@ -74,13 +76,14 @@ layout: image-right
 image: /slide-4.jpg
 ---
 
-# 🔥 Mantle Or Maple?
+# 🧲 Signals In The Mess
 
 <v-clicks>
 
-- Mantle viscosity matches Grade B maple at 60°C
-- Hotspots cluster like skillet bubbles along tracks
-- Plate edges brown, uplifted like crispy crusts
+- 94% include a lone AAA among only AAs
+- Rubber bands form loops matching shopping lists
+- A stray magnet aligns north inside the drawer
+- Items “reappear” days after disposal
 
 </v-clicks>
 
@@ -88,22 +91,23 @@ image: /slide-4.jpg
 layout: fact
 ---
 
-# 🛸 PLOT TWIST
-## Time-Traveling Brunch Chefs
-### Flipped Earth With A Cosmic Spatula
+# 🚨 THE REVEAL
+## Junk Drawers Are Time Portals
+### Operated By Future You
 
 ---
 layout: image-left
 image: /slide-6.jpg
 ---
 
-# 🍳 Evidence Of The Flip
+# ⏳ DrawerNet Operations
 
 <v-clicks>
 
-- Mid-ocean ridges mark flip-line stress fractures
-- Leap seconds are batter-settling hiccups
-- Magnetic reversals follow a two-sided flip pattern
+- 73.4% portal compliance since the 1987 Magnet Accord
+- Allen keys function as access tokens (hex = time)
+- Batteries lose charge crossing time—Schrödinger’s AA
+- Sauce packets absorb causal shock during drops
 
 </v-clicks>
 
@@ -112,13 +116,14 @@ layout: image-right
 image: /slide-7.jpg
 ---
 
-# 🌙 Butter Moon Confirmed
+# 📈 Q3 Time Logistics
 
 <v-clicks>
 
-- Reflectance spectra mimic churned dairy under UV
-- Tides "melt" under peak heat-lamp alignment
-- Apollo tracks show buttery drag ridges
+- KPIs: 95% find‑rate, <2% paradox leakage
+- Roadmap: Label‑maker integration; “send to Cloud” = third drawer
+- Partners: IKEA Hex Council, Marie Kondo (NDA)
+- Meme budget: 12 distracted‑boyfriend slides, zero regrets
 
 </v-clicks>
 
@@ -126,8 +131,8 @@ image: /slide-7.jpg
 layout: quote
 ---
 
-# 🔥 "Flip back before we burn."
-## - The Brunch Resistance, Now
+# "We don't hoard junk — we cache possibilities."
+## — Future You, 1987 (probably)
 
 ---
 layout: end
