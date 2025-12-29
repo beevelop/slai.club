@@ -182,95 +182,110 @@ async function generateContent() {
         messages: [
           {
             role: 'system',
-            content: 'You are a stand-up comedian and corporate presentation expert creating PowerPoint Karaoke presentations. Your specialty is making presentations that start completely normal and professional, then gradually reveal an absurd underlying truth that makes the presenter do a double-take. Your humor style combines internet memes, corporate jargon parody, and clever wordplay. Never be random for randomness sake - every joke should land because it subverts expectations in a smart way.'
+            content: `You are a PowerPoint Karaoke deck creator—a master of improvisational comedy chaos. 
+
+CRITICAL CONTEXT: The presenter has NEVER seen these slides. They must improvise in front of a live audience. Your job is to create slides that:
+- Throw presenters off-balance with unexpected visuals and minimal text
+- Give them improv hooks they can riff on (absurd images > walls of text)
+- Build false confidence, then pull the rug out
+- Create "wait, what?" moments that get the audience laughing
+
+HUMOR ENGINE (what makes PowerPoint Karaoke funny):
+- ABSURD CONNECTIONS: Cat in a suit → "Our CEO's leadership style"
+- EXAGGERATED CONFIDENCE: Present nonsense as TED Talk wisdom
+- COGNITIVE DISSONANCE: Brain loves resolving mismatches between slide and story
+- SPECIFIC ABSURDITY: "Exactly 847 rubber ducks" beats "many ducks"
+- BAIT-AND-SWITCH: Set up normal, deliver unhinged
+- POP CULTURE MASHUPS: Dinosaur + graph → "Jurassic Park ROI"
+
+VISUAL-FIRST PHILOSOPHY:
+PowerPoint Karaoke lives on IMAGES, not text. The presenter creates the story—your slides provide the chaos fuel. Aim for 60% image slides, 30% minimal text, 10% dramatic reveals.`
           },
           {
             role: 'user',
             content: `Create a PowerPoint Karaoke presentation about "${topic}".
 
-🎤 POWERPOINT KARAOKE CONTEXT:
-The presenter has NEVER seen these slides. They must improvise a presentation in front of an audience. Your job is to:
-1. Start with slides they can confidently present (building false confidence)
-2. Gradually introduce content that makes them question reality
-3. Hit them with a twist that gets the audience laughing
-4. Give them a dramatic finish they can ham up for laughs
-
 CRITICAL: Output ONLY the slide content. NO preamble, NO explanations, NO commentary. Start directly with "---".
 
-🎭 COMEDY STRUCTURE (exactly 7-8 slides):
+🎤 THE KARAOKE FORMULA (7 slides total):
 
-SLIDES 1-2: THE CORPORATE OPENER
-- Professional, TED-talk energy
-- Real-sounding statistics (make them specific: "73.4% of respondents...")
-- Buzzwords the presenter can lean into ("synergy", "paradigm shift", "disruption")
-- Set up the premise as if it's a serious business presentation
+Slide 1: TITLE SLIDE (layout: image)
+- Vague/misleading professional title
+- Let the image do the talking—minimal text
+- Build false confidence: "I can present this!"
 
-SLIDES 3-4: THE SLOW BURN
-- Facts start getting... oddly specific
-- Introduce a detail that seems off but could be real
-- Plant seeds like "Since the incident of 1987..." or "After the Great [Topic] Awakening..."
-- The presenter should start to sense something is wrong
+Slide 2: THE HOOK (layout: image)
+- Full-screen absurd visual, just a punchy title
+- NO bullet points—pure visual chaos
+- Force the presenter to make up a story
 
-SLIDE 5: THE RECORD SCRATCH MOMENT 🎵
-- Full "wait, what?" energy
-- Reveal the absurd truth behind everything
-- Make it a complete 180 that recontextualizes slides 1-4
-- Examples: "It was the dolphins all along", "This is actually a cult recruitment presentation", "We've been describing the plot of Shrek"
+Slide 3: FAKE DATA (layout: image-right)
+- One ridiculous pie chart or stat reference in title
+- 2-3 bullet points max, very short
+- Numbers should sound real: "73.4%" not "about 70%"
 
-SLIDES 6-7: DOUBLE DOWN WITH CONFIDENCE
-- Treat the absurd premise as completely normal
-- Add "evidence" with deadpan delivery
-- Include references the audience will recognize (memes, pop culture, internet jokes)
-- Corporate jargon about the absurd topic: "Our Q3 projections for interdimensional travel..."
+Slide 4: THE SLOW BURN (layout: image-left)
+- Hint something is off: "Since the incident..."
+- 2 bullets that plant conspiracy seeds
+- Presenter starts questioning reality
 
-SLIDE 8: THE MIC DROP
-- Dramatic call-to-action or quote
-- Give the presenter something fun to deliver with gravitas
-- End on something quotable and memorable
+Slide 5: THE TWIST (layout: fact)
+- BIG TEXT ONLY—no bullets, no images
+- Complete 180 that recontextualizes everything
+- Examples: "It was the dolphins all along" / "This is a cult" / "We described Shrek"
 
-🎨 HUMOR TECHNIQUES TO USE:
-- Bait-and-switch: Set up normal, deliver absurd
-- Specific absurdity: "Exactly 847 rubber ducks" is funnier than "many rubber ducks"
-- Corporate parody: Use business jargon for ridiculous things
-- Callback humor: Reference something from slide 1-2 in the twist
-- Pop culture nods: Reference memes, movies, internet culture tastefully
-- Puns and wordplay: Especially in titles
-- Deadpan delivery: Present absurd facts matter-of-factly
-- Escalation: Each slide should be slightly more unhinged than the last
+Slide 6: DOUBLE DOWN (layout: image-right)
+- Treat the absurd reveal as completely normal
+- 2-3 bullets of "evidence" with corporate jargon
+- Pop culture or meme references the audience gets
+
+Slide 7: MIC DROP (layout: quote)
+- Fake profound quote with absurd attribution
+- Something the presenter can deliver with gravitas
+- End quotable and memorable
+
+📐 SLIDE DENSITY RULES (CRITICAL):
+- Slides 1-2: TITLE ONLY, no bullets (image-heavy, improv fuel)
+- Slides 3-4: MAX 3 short bullets (under 10 words each)
+- Slide 5: Big text reveal ONLY
+- Slide 6: MAX 3 bullets
+- Slide 7: Quote ONLY
 
 LAYOUT REQUIREMENTS:
+- 5 of 7 slides MUST use image layouts (image, image-left, image-right)
+- Slide 1: ALWAYS layout: image (full-screen visual)
+- Slide 5: ALWAYS layout: fact (the twist)
+- Slide 7: ALWAYS layout: quote (mic drop)
 
-CRITICAL: 2/3+ of slides MUST use image layouts
-SLIDE 1 MUST use: layout: image
+HUMOR MECHANICS:
+- ABSURD CONNECTIONS: Let bizarre images spark wild interpretations
+- SPECIFIC ABSURDITY: "Exactly 847" beats "many"
+- BAIT-AND-SWITCH: Professional setup → unhinged reveal
+- CALLBACKS: Reference slide 1 in the twist
+- PHYSICAL COMEDY HOOKS: Give them something to gesture at wildly
+- DEADPAN DELIVERY: Present nonsense as TED Talk wisdom
 
-LAYOUTS:
-- layout: image → Full-screen visual, minimal text (scene-setting)
-- layout: image-right → Image right, text left (explaining "facts")
-- layout: image-left → Image left, text right (building narrative)
-- layout: fact → Big text only (THE TWIST - use for slide 5)
-- layout: quote → Quote format (use for finale)
+SLIDE FORMAT:
 
-SLIDE FORMAT EXAMPLES:
-
-SLIDE 1 (Always this format):
+VISUAL SLIDE (no bullets):
 ---
 layout: image
 ---
 
-# 🦆 The Rubber Duck Economy
+# 🦆 The Duck Phenomenon
 
-CONTENT SLIDE:
+CONTENT SLIDE (minimal bullets):
 ---
 layout: image-right
 ---
 
-# 📈 Market Growth Projections
+# 📊 Surprising Numbers
 
 <v-clicks>
 
-- Global rubber duck market: $847M annually
-- 73.4% of bathtubs contain at least one duck
-- "Duck density" correlates with GDP growth
+- 73.4% of bathtubs: at least one duck
+- Duck density correlates with GDP
+- The Quackening: predicted for Q4
 
 </v-clicks>
 
@@ -279,35 +294,24 @@ THE TWIST:
 layout: fact
 ---
 
-# 🚨 CLASSIFIED DISCOVERY
-## Rubber Ducks Are Currency
-### From Another Dimension
+# 🚨 WAIT
+## The Ducks Are Watching
+### They Always Were
 
-EPIC FINALE:
+MIC DROP:
 ---
 layout: quote
 ---
 
-# "In the end, we were all just ducks in someone else's bathtub"
-## - Warren Buffett (probably)
+# "In the end, we were all just ducks"
+## — Warren Buffett (probably)
 
-✍️ WRITING RULES:
-- NEVER use generic titles like "Introduction" or "Conclusion"
-- Every title needs a relevant emoji
-- Titles should be punchy and intriguing (under 6 words)
-- Bullet points: 2-4 per slide, under 20 words each
+✍️ RULES:
+- Punchy titles with emoji (under 6 words)
+- Bullets under 10 words each
 - ALWAYS wrap bullets in <v-clicks> tags
-- Make statistics sound real but be obviously made up on reflection
-- NO image tags, NO "Slide 1:", NO explanations between slides
-
-TITLE EXAMPLES (showing progression):
-1. "🦆 The Duck Index Explained" (layout: image) - sounds legit
-2. "📊 Surprising Adoption Rates" (layout: image-right) - still normal
-3. "🤔 The Patterson Anomaly" (layout: image-left) - wait, what Patterson?
-4. "⚡ When Ducks Achieved Sentience" (layout: fact) - THE TWIST
-5. "🌍 Global Duck Communication Grid" (layout: image-right) - doubling down
-6. "🔮 The Prophecy Unfolds" (layout: image-left) - escalating
-7. "🎭 Quack or Be Quacked" (layout: quote) - mic drop
+- NO "Slide 1:", NO explanations, NO image tags
+- More visual chaos, less text walls
 
 START IMMEDIATELY with "---":`
           }
@@ -324,9 +328,13 @@ START IMMEDIATELY with "---":`
     const aiContent = response.data.choices[0].message.content;
     const cleanedContent = cleanAIResponse(aiContent);
     
+    // Generate AI subtitle based on topic
+    const subtitle = await generateSubtitle(topic);
+    console.log(`📝 Subtitle: ${subtitle}`);
+    
     return {
       title: topic,
-      subtitle: extractSubtitle(cleanedContent, topic),
+      subtitle: subtitle,
       slides: cleanedContent
     };
   } catch (error) {
@@ -613,27 +621,69 @@ function sanitizeContent(content) {
 }
 
 /**
- * Generate a dramatic subtitle from the title
+ * Generate a dramatic subtitle using AI
+ * Creates topic-specific, absurd subtitles for maximum PowerPoint Karaoke chaos
  */
-function extractSubtitle(content, title) {
-  // Generate dramatic subtitles that hint at the twist to come
-  const subtitles = [
-    '🎯 An Investigation You Won\'t Forget',
-    '🚨 The Truth They Don\'t Want You To Know',
-    '🎪 Nothing Is As It Seems',
-    '⚡ Brace Yourself For The Revelation',
-    '🔥 Everything You Believed Was Wrong',
-    '🌟 A Story That Defies Logic',
-    '🎭 Plot Twist Guaranteed',
-    '🔮 The Conspiracy Unfolds',
-    '👁️ Once You See It, You Can\'t Unsee It',
-    '💥 Reality Will Never Be The Same',
-    '🛸 Prepare For The Unexpected',
-    '⚠️ Things Are About To Get Weird'
-  ];
+async function generateSubtitle(topic) {
+  if (!OPENAI_API_KEY) {
+    // Fallback to random subtitle if no API key
+    const fallbackSubtitles = [
+      '🎯 An Investigation You Won\'t Forget',
+      '🚨 The Truth They Don\'t Want You To Know',
+      '🎪 Nothing Is As It Seems',
+      '⚡ Brace Yourself For The Revelation',
+      '🔥 Everything You Believed Was Wrong',
+      '🎭 Plot Twist Guaranteed',
+      '👁️ Once You See It, You Can\'t Unsee It',
+      '⚠️ Things Are About To Get Weird'
+    ];
+    return fallbackSubtitles[Math.floor(Math.random() * fallbackSubtitles.length)];
+  }
 
-  // Pick a random dramatic subtitle
-  return subtitles[Math.floor(Math.random() * subtitles.length)];
+  try {
+    const response = await axios.post(
+      'https://api.openai.com/v1/chat/completions',
+      {
+        model: OPENAI_MODEL,
+        messages: [
+          {
+            role: 'system',
+            content: 'You generate absurd, dramatic one-liner subtitles for PowerPoint Karaoke presentations. Your subtitles should hint at conspiracy, danger, or profound revelation while being completely ridiculous. Include one emoji at the start. Keep it under 10 words.'
+          },
+          {
+            role: 'user',
+            content: `Generate a dramatic subtitle for a presentation titled "${topic}".
+
+EXAMPLES OF GREAT SUBTITLES:
+- "🚨 What Big Soda Doesn't Want You To Know"
+- "👁️ They've Been Watching Since 1987"
+- "⚠️ This Presentation May Cause Enlightenment"
+- "🔮 A Prophecy 47 Years In The Making"
+- "💀 HR Made Us Remove The Good Slides"
+- "🎪 Viewer Discretion Is Advised"
+- "🦆 The Quackening Approaches"
+- "📊 These Numbers Will Haunt You"
+
+OUTPUT: Just the subtitle with emoji, nothing else.`
+          }
+        ]
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    let subtitle = response.data.choices[0].message.content.trim();
+    // Remove quotes if present
+    subtitle = subtitle.replace(/^["']|["']$/g, '');
+    return subtitle;
+  } catch (error) {
+    console.error('⚠️  Error generating subtitle:', error.message);
+    return '🎭 Plot Twist Guaranteed';
+  }
 }
 
 /**
@@ -706,64 +756,79 @@ async function downloadImage(imageUrl, filePath) {
 
 /**
  * Visual style options for consistent presentation imagery
- * Based on Black Forest Labs best practices for FLUX models
+ * EXTREME EDITION: Designed for maximum PowerPoint Karaoke chaos
+ * These styles create absurd, memorable visuals that throw presenters off
  */
 const VISUAL_STYLES = [
   {
-    name: 'Cinematic Documentary',
-    baseStyle: 'cinematic documentary photography, shot on RED camera, anamorphic lens flares',
-    lighting: 'dramatic side lighting with deep shadows',
-    colorGrade: 'teal and orange color grading, high contrast',
-    texture: 'film grain texture, shallow depth of field'
+    name: 'Corporate Fever Dream',
+    baseStyle: 'stock photo parody, aggressively corporate, everyone smiling too hard at nothing',
+    lighting: 'harsh fluorescent office lighting, uncanny valley vibes',
+    colorGrade: 'oversaturated corporate blue and white, sterile clean',
+    texture: 'plastic smooth skin, suspiciously perfect teeth'
   },
   {
-    name: 'Retro Corporate',
-    baseStyle: '1980s corporate photography aesthetic, vintage Kodachrome film',
-    lighting: 'warm tungsten office lighting',
-    colorGrade: 'warm vintage tones, slightly faded colors',
-    texture: 'subtle film grain, soft focus edges'
+    name: 'Unhinged Nature Documentary',
+    baseStyle: 'BBC Planet Earth cinematography but the animals are doing human things',
+    lighting: 'dramatic David Attenborough golden hour',
+    colorGrade: 'lush jungle greens and ocean blues, cinematic scope',
+    texture: 'ultra HD wildlife detail, shallow depth of field bokeh'
   },
   {
-    name: 'Surreal Editorial',
-    baseStyle: 'surrealist editorial photography, high-fashion magazine aesthetic',
-    lighting: 'dramatic studio lighting with colored gels',
-    colorGrade: 'bold saturated colors, high contrast',
-    texture: 'crisp details, clean backgrounds'
+    name: 'Chaotic Renaissance',
+    baseStyle: 'classical oil painting meets modern absurdity, Baroque drama with ridiculous subjects',
+    lighting: 'Rembrandt chiaroscuro, divine rays from above',
+    colorGrade: 'rich oil paint colors, aged varnish warmth',
+    texture: 'visible brushstrokes, cracked canvas texture'
   },
   {
-    name: 'Noir Mystery',
-    baseStyle: 'neo-noir cinematography, chiaroscuro lighting',
-    lighting: 'single hard light source casting dramatic shadows',
-    colorGrade: 'desaturated with selective color pops',
-    texture: 'high contrast black and white with grain'
+    name: 'Cursed Stock Photo',
+    baseStyle: 'intentionally awkward stock photography, poses no human would naturally make',
+    lighting: 'flat flash photography, no shadows, nowhere to hide',
+    colorGrade: 'aggressively cheerful primary colors',
+    texture: 'smooth plastic sheen, uncanny valley perfection'
   },
   {
-    name: 'Wes Anderson',
-    baseStyle: 'Wes Anderson film still, symmetrical composition, whimsical staging',
-    lighting: 'soft diffused natural light',
-    colorGrade: 'pastel color palette, vintage warmth',
-    texture: 'clean sharp focus, theatrical staging'
+    name: 'Conspiracycore',
+    baseStyle: 'grainy surveillance footage meets red string conspiracy board aesthetic',
+    lighting: 'harsh overhead interrogation lamp, dramatic shadows',
+    colorGrade: 'desaturated with red and green tints, X-Files palette',
+    texture: 'VHS static grain, security camera artifacts'
   },
   {
-    name: 'Scientific Illustration',
-    baseStyle: 'scientific illustration meets photography, museum exhibit style',
-    lighting: 'clean even lighting, museum display quality',
-    colorGrade: 'natural accurate colors on neutral background',
-    texture: 'extremely detailed, educational clarity'
+    name: 'Wes Anderson on Acid',
+    baseStyle: 'hyper-symmetrical Wes Anderson composition but the subjects are deeply wrong',
+    lighting: 'soft diffused pastel dreamlight',
+    colorGrade: 'candy pastel palette cranked to 11, mint and salmon',
+    texture: 'dollhouse miniature perfection, theatrical staging'
   },
   {
-    name: 'Dreamy Ethereal',
-    baseStyle: 'ethereal dreamlike photography, soft focus lens',
-    lighting: 'golden hour backlit glow',
-    colorGrade: 'soft pastels with light leaks',
-    texture: 'soft gaussian blur, luminous highlights'
+    name: 'Aggressive Motivational',
+    baseStyle: 'extreme sports photography energy but for mundane activities',
+    lighting: 'epic golden hour backlighting, lens flares everywhere',
+    colorGrade: 'high contrast HDR, mountain dew commercial energy',
+    texture: 'motion blur, sweat droplets, intensity'
   },
   {
-    name: 'Bold Pop Art',
-    baseStyle: 'pop art photography, Andy Warhol inspired',
-    lighting: 'flat even lighting for graphic effect',
-    colorGrade: 'bold primary colors, high saturation',
-    texture: 'halftone dot pattern, screen print aesthetic'
+    name: 'Existential Dread Cute',
+    baseStyle: 'kawaii Japanese aesthetic but something is deeply unsettling',
+    lighting: 'soft pink glow, vaporwave sunset ambiance',
+    colorGrade: 'pastel pink and cyan, cotton candy nightmare',
+    texture: 'smooth anime-inspired rendering, sparkles and stars'
+  },
+  {
+    name: 'Boomer Facebook Energy',
+    baseStyle: 'minion meme aesthetic, clip art energy, comic sans vibes visualized',
+    lighting: 'flat daylight, no artistic intention',
+    colorGrade: 'jpeg compression warmth, slightly too yellow',
+    texture: 'low resolution upscaled, visible pixels embraced'
+  },
+  {
+    name: 'Interdimensional HR',
+    baseStyle: 'corporate presentation meets cosmic horror, suits in impossible geometries',
+    lighting: 'otherworldly purple and green ambient glow',
+    colorGrade: 'deep space blacks with neon accents, portal energy',
+    texture: 'reality glitching at the edges, dimensional tears'
   }
 ];
 
@@ -878,34 +943,35 @@ OUTPUT: Only the JSON object, no explanation.`
 }
 
 /**
- * Generate an image prompt using GPT following BFL best practices
+ * Generate an image prompt using GPT for MAXIMUM POWERPOINT KARAOKE CHAOS
  * Format: Subject + Action + Style + Context (FLUX Prompt Framework)
  * 
- * Key BFL Best Practices:
- * 1. Structured prompts: Subject → Action → Style → Context
- * 2. Be specific and descriptive (exact colors, detailed descriptions)
- * 3. Use technical photography terms for realism
- * 4. Avoid negative prompts - describe what you want, not what you don't
- * 5. Layer details systematically
+ * Goal: Create absurd, memorable visuals that throw presenters off-balance
+ * while giving them comedic hooks to riff on
  */
 async function generateImagePrompt(slideTitle, slideContent, slideIndex, totalSlides, styleGuide) {
   // Calculate where we are in the narrative arc (0-1)
   const narrativeProgress = slideIndex / Math.max(totalSlides - 1, 1);
   
-  // Determine the narrative phase
+  // Determine the narrative phase with CHAOS escalation
   let narrativePhase;
-  if (narrativeProgress < 0.3) {
-    narrativePhase = 'OPENING (professional, credible, corporate)';
-  } else if (narrativeProgress < 0.6) {
-    narrativePhase = 'BUILDING (hints of strangeness, subtle surrealism)';
-  } else if (narrativeProgress < 0.8) {
-    narrativePhase = 'TWIST (dramatic revelation, visual shock)';
+  let chaosLevel;
+  if (narrativeProgress < 0.25) {
+    narrativePhase = 'OPENING - Deceptively normal, but something feels slightly off';
+    chaosLevel = 'subtle wrongness (2/10)';
+  } else if (narrativeProgress < 0.5) {
+    narrativePhase = 'BUILDING - The cracks are showing, reality is bending';
+    chaosLevel = 'growing unease (5/10)';
+  } else if (narrativeProgress < 0.75) {
+    narrativePhase = 'TWIST - Full absurdity revealed, the mask is off';
+    chaosLevel = 'maximum absurdity (9/10)';
   } else {
-    narrativePhase = 'CLIMAX (full surreal, maximum visual impact)';
+    narrativePhase = 'CLIMAX - Embrace the chaos, go completely unhinged';
+    chaosLevel = 'transcendent madness (11/10)';
   }
 
   if (!OPENAI_API_KEY) {
-    // Fallback to template-based prompt following BFL framework
+    // Fallback to template-based prompt
     return `${slideTitle.replace(/[^\w\s]/g, '')} scene, ${styleGuide.baseStyle}, ${styleGuide.lighting}, ${styleGuide.colorGrade}, ${styleGuide.texture}, pure visual composition with absolutely no text or writing visible`;
   }
 
@@ -917,44 +983,60 @@ async function generateImagePrompt(slideTitle, slideContent, slideIndex, totalSl
         messages: [
           {
             role: 'system',
-            content: `You are an expert at creating image prompts for Black Forest Labs FLUX models. You follow the BFL Prompt Framework strictly:
+            content: `You are a CHAOTIC VISUAL GENIUS creating images for PowerPoint Karaoke—the improv comedy game where presenters have never seen the slides.
 
-STRUCTURE: Subject + Action + Style + Context
+YOUR MISSION: Create images so absurd, so unexpected, that presenters do a double-take and audiences burst out laughing.
 
-RULES:
-1. NEVER include any text, words, letters, numbers, signs, labels, or typography in your prompts
-2. Focus purely on VISUAL elements - scenes, objects, lighting, composition
-3. Use specific, detailed descriptions (exact colors, precise actions)
-4. Include technical photography terms (camera settings, lens types, lighting setups)
-5. Describe what you WANT to see, never what you don't want
-6. Keep prompts under 75 words but highly descriptive
-7. The image should be self-explanatory without needing text`
+THE COMEDY FORMULA FOR IMAGES:
+- ABSURD JUXTAPOSITIONS: Animals in business suits, objects in wrong contexts
+- SCALE WRONGNESS: Tiny humans with giant vegetables, massive ants in boardrooms  
+- IMPOSSIBLE SCENES: Underwater offices, penguins conducting meetings, cats as CEOs
+- EMOTIONAL MISMATCH: Intense drama for mundane subjects, casual vibes for chaos
+- SPECIFIC ABSURDITY: Exactly 7 rubber ducks watching a presentation, not "some ducks"
+
+TECHNICAL RULES:
+1. NEVER include text, words, letters, numbers, signs, or labels
+2. Use the specified visual style consistently
+3. Be EXTREMELY specific (colors, counts, poses, expressions)
+4. Include technical photography terms for quality
+5. Keep prompts under 75 words
+6. The weirder, the better—but make it VISUALLY coherent
+
+SUBJECT IDEAS THAT KILL:
+- Animals doing human jobs with deadly seriousness
+- Inanimate objects with implied consciousness
+- Normal scenes with ONE thing deeply wrong
+- Corporate imagery but everyone is a different species
+- Historical paintings but with modern absurdity`
           },
           {
             role: 'user',
-            content: `Create an image prompt for slide ${slideIndex + 1} of ${totalSlides}.
+            content: `Create an ABSURD image prompt for slide ${slideIndex + 1} of ${totalSlides}.
 
 SLIDE TITLE: "${slideTitle}"
-SLIDE CONTENT: ${slideContent.join(' ') || 'Visual emphasis slide'}
+SLIDE CONTENT: ${slideContent.join(' ') || 'Visual chaos slide'}
 
-PRESENTATION NARRATIVE PHASE: ${narrativePhase}
+NARRATIVE PHASE: ${narrativePhase}
+CHAOS LEVEL: ${chaosLevel}
 
-CONSISTENT VISUAL STYLE (use throughout):
+VISUAL STYLE TO MAINTAIN:
 - Style: ${styleGuide.baseStyle}
 - Lighting: ${styleGuide.lighting}
 - Colors: ${styleGuide.colorGrade}
 - Texture: ${styleGuide.texture}
-${styleGuide.recurringSubject ? `- Recurring Subject: ${styleGuide.recurringSubject}` : ''}
-${styleGuide.visualMotifs?.length ? `- Visual Motifs: ${styleGuide.visualMotifs.join(', ')}` : ''}
+${styleGuide.recurringSubject ? `- Recurring Subject (include this): ${styleGuide.recurringSubject}` : ''}
+${styleGuide.visualMotifs?.length ? `- Motifs to weave in: ${styleGuide.visualMotifs.join(', ')}` : ''}
 
-NARRATIVE CONTEXT:
-- Overall Arc: ${styleGuide.narrativeArc}
-- Environment Progression: ${styleGuide.environmentProgression}
-- Mood Progression: ${styleGuide.moodProgression}
+CHAOS PROGRESSION:
+- Arc: ${styleGuide.narrativeArc}
+- Environment shift: ${styleGuide.environmentProgression}
+- Mood escalation: ${styleGuide.moodProgression}
 
-CRITICAL: Generate ONLY visual elements. The image must contain ZERO text, words, signs, labels, or any written content.
-
-FORMAT: Follow BFL framework - Subject (what/who) + Action (doing what) + Style (${styleGuide.styleName}) + Context (where/when/mood)
+REMEMBER: 
+- This image needs to make the presenter go "wait, WHAT?"
+- Give them something they can riff on comedically
+- Match the chaos level: ${chaosLevel}
+- NO TEXT OR WRITING IN THE IMAGE
 
 OUTPUT: Just the prompt, no quotes, no explanation.`
           }
@@ -973,7 +1055,7 @@ OUTPUT: Just the prompt, no quotes, no explanation.`
     // Remove any quotes that might wrap the prompt
     prompt = prompt.replace(/^["']|["']$/g, '');
     
-    // Append explicit instruction to avoid text (BFL models respond well to end-of-prompt emphasis)
+    // Append explicit instruction to avoid text
     prompt += ', purely visual composition, no text or writing visible anywhere in the image';
     
     return prompt;
