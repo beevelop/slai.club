@@ -1,10 +1,6 @@
 name: Generate AI Presentation
 
 on:
-  # Run on a schedule (daily at 10 AM UTC)
-  schedule:
-    - cron: '0 10 * * *'
-  
   # Allow manual triggering with optional custom topic
   workflow_dispatch:
     inputs:
