@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@fal-ai/client": "^1.6.2",
-    "@slidev/cli": "^52.2.5",
+    "@slidev/cli": "^52.16.0",
     "@slidev/theme-default": "latest"
   },
   "devDependencies": {
